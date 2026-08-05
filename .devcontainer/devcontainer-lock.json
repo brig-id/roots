@@ -30,11 +30,6 @@
       "resolved": "ghcr.io/helpers4/devcontainer/claude-dev@sha256:8625221ea66e93614e972198f734ff08520105c0caa95e0079856b74c2fab69b",
       "integrity": "sha256:8625221ea66e93614e972198f734ff08520105c0caa95e0079856b74c2fab69b"
     },
-    "ghcr.io/helpers4/devcontainer/dotfiles-sync:1": {
-      "version": "1.0.4",
-      "resolved": "ghcr.io/helpers4/devcontainer/dotfiles-sync@sha256:0c83130721dd7667f76a5c9ad7ab0d7cc3db37cc50320d6c2dc911fc17df48b5",
-      "integrity": "sha256:0c83130721dd7667f76a5c9ad7ab0d7cc3db37cc50320d6c2dc911fc17df48b5"
-    },
     "ghcr.io/helpers4/devcontainer/essential-dev:1": {
       "version": "1.0.6",
       "resolved": "ghcr.io/helpers4/devcontainer/essential-dev@sha256:a59d51a49ebfe94011df09db1d50fcbc167ffa7051d6775090a971c993054287",

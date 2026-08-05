@@ -35,7 +35,14 @@
       "moby": false
     },
     // ── helpers4 features ────────────────────────────────────────────────────
-    "ghcr.io/helpers4/devcontainer/dotfiles-sync:1": {},
+    // dotfiles-sync deliberately NOT included: it bind-mounts the host's
+    // ~/.gitconfig, ~/.ssh, ~/.gnupg, ~/.npmrc, ~/.aws, ~/.kube, ~/.docker
+    // config into the container, assuming a local Docker Desktop/WSL2 host.
+    // On GitHub Codespaces there is no such host — those mount sources
+    // resolve to nonexistent root-relative paths (/.gitconfig, etc.), and
+    // Docker refuses to create the container at all when a bind mount's
+    // source is missing. This is why the container creation failed outright
+    // on Codespaces (see the "invalid mount config ... /.gitconfig" error).
     "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
     "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
     "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
