@@ -1,0 +1,113 @@
+{
+  "format": "<type>(<scope>): <emoji> <description>",
+  "rules": {
+    "description": "≤72 chars · English · lowercase · imperative mood · no trailing period",
+    "scope": "optional; when used, must be a value from scopes.json at the repo root",
+    "emoji": "exactly one, placed between the colon and the description"
+  },
+  "types": [
+    {
+      "name": "feat",
+      "description": "new feature or user-visible enhancement",
+      "emoji": "✨",
+      "alternatives": [
+        { "emoji": "🚸", "when": "UX improvement" },
+        { "emoji": "♿️", "when": "accessibility" },
+        { "emoji": "🌐", "when": "internationalization" },
+        { "emoji": "💬", "when": "text / literals" }
+      ]
+    },
+    {
+      "name": "fix",
+      "description": "bug fix",
+      "emoji": "🐛",
+      "alternatives": [
+        { "emoji": "🚑️", "when": "critical hotfix" },
+        { "emoji": "🔒️", "when": "security fix" },
+        { "emoji": "🩹", "when": "trivial / non-critical fix" },
+        { "emoji": "🥅", "when": "catch / handle errors" },
+        { "emoji": "🚨", "when": "fix linter warnings" },
+        { "emoji": "✏️", "when": "typo" }
+      ]
+    },
+    {
+      "name": "docs",
+      "description": "documentation only",
+      "emoji": "📝",
+      "alternatives": [
+        { "emoji": "💡", "when": "comments in source code" },
+        { "emoji": "📄", "when": "license" }
+      ]
+    },
+    {
+      "name": "refactor",
+      "description": "code change that neither fixes a bug nor adds a feature",
+      "emoji": "♻️",
+      "alternatives": [
+        { "emoji": "🎨", "when": "improve structure / format" },
+        { "emoji": "🔥", "when": "remove code or files" },
+        { "emoji": "⚰️", "when": "remove dead code" },
+        { "emoji": "🚚", "when": "move or rename" }
+      ]
+    },
+    {
+      "name": "test",
+      "description": "add or update tests",
+      "emoji": "✅",
+      "alternatives": [
+        { "emoji": "🧪", "when": "add failing test" },
+        { "emoji": "💚", "when": "fix CI tests" }
+      ]
+    },
+    {
+      "name": "chore",
+      "description": "maintenance, tooling, config",
+      "emoji": "🔧",
+      "alternatives": [
+        { "emoji": "🔖", "when": "tag / release" },
+        { "emoji": "📌", "when": "pin dependencies" },
+        { "emoji": "🩺", "when": "healthcheck" },
+        { "emoji": "🙈", "when": "update .gitignore" }
+      ]
+    },
+    {
+      "name": "perf",
+      "description": "performance improvement",
+      "emoji": "⚡️",
+      "alternatives": []
+    },
+    {
+      "name": "style",
+      "description": "formatting, whitespace — no logic change",
+      "emoji": "💄",
+      "alternatives": [
+        { "emoji": "🎨", "when": "code style" }
+      ]
+    },
+    {
+      "name": "ci",
+      "description": "CI/CD configuration",
+      "emoji": "👷",
+      "alternatives": [
+        { "emoji": "💚", "when": "fix CI" }
+      ]
+    },
+    {
+      "name": "build",
+      "description": "build system or external dependencies",
+      "emoji": "📦️",
+      "alternatives": [
+        { "emoji": "➕", "when": "add dependency" },
+        { "emoji": "➖", "when": "remove dependency" },
+        { "emoji": "⬆️", "when": "upgrade dependency" },
+        { "emoji": "⬇️", "when": "downgrade dependency" }
+      ]
+    },
+    {
+      "name": "revert",
+      "description": "revert a previous commit",
+      "emoji": "⏪️",
+      "alternatives": []
+    }
+  ]
+}

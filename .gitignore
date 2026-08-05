@@ -1,0 +1,6 @@
+.history
+.copilot
+.DS_Store
+Thumbs.db
+node_modules
+mkcert-rootCA.pem

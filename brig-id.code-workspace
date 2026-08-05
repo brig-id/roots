@@ -1,0 +1,69 @@
+{
+  "folders": [
+    {
+      "name": "🌱 roots",
+      "path": "."
+    },
+    {
+      "name": "📦 .github",
+      "path": "../.github"
+    },
+    {
+      "name": "🔐 crypto",
+      "path": "../crypto"
+    },
+    {
+      "name": "🧩 core",
+      "path": "../core"
+    },
+    {
+      "name": "🌿 server-leaf",
+      "path": "../server-leaf"
+    },
+    {
+      "name": "🌳 server-grove",
+      "path": "../server-grove"
+    },
+    {
+      "name": "🌲 server-forest",
+      "path": "../server-forest"
+    },
+    {
+      "name": "📐 spec",
+      "path": "../spec"
+    },
+    {
+      "name": "🌐 app",
+      "path": "../app"
+    }
+  ],
+  "settings": {
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+      {
+        "text": "Generate commit messages in English using Conventional Commits. Keep them concise, imperative, and lowercase after the colon."
+      }
+    ],
+    "cSpell.words": [
+      "brigid",
+      "clippy",
+      "distroless",
+      "gitmoji",
+      "hkdf",
+      "inquire",
+      "mkcert",
+      "mprocs",
+      "nonroot",
+      "oidc",
+      "passkey",
+      "passkeys",
+      "qwik",
+      "reqwest",
+      "rustls",
+      "softpasskey",
+      "tokio",
+      "tracing",
+      "vsid",
+      "webauthn"
+    ]
+  }
+}

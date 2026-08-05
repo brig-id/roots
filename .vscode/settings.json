@@ -1,0 +1,9 @@
+{
+  "conventionalCommits.gitmoji": true,
+  "conventionalCommits.scopes": [
+    "workspace",
+    "devcontainer",
+    "ai",
+    "ci"
+  ]
+}

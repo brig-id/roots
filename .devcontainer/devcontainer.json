@@ -1,0 +1,81 @@
+{
+  "name": "brig·id",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+  "workspaceFolder": "/workspaces/roots",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/roots,type=bind,consistency=cached",
+  "mounts": [
+    // ── cargo cache (named volumes — nothing on the host) ──────────────────────
+    "source=brigid-cargo-registry,target=/home/node/.cargo/registry,type=volume",
+    "source=brigid-cargo-git,target=/home/node/.cargo/git,type=volume",
+    // ── shared build artifacts (target/ outside repos to avoid pollution) ──────
+    "source=brigid-cargo-target,target=/cargo-target,type=volume"
+  ],
+  "containerEnv": {
+    "BRIG_ID_ORG": "brig-id",
+    "BRIG_ID_REPOS": ".github crypto core server-leaf server-grove server-forest spec app",
+    // Redirect all Rust target/ dirs to the dedicated volume (never on the host)
+    "CARGO_TARGET_DIR": "/cargo-target",
+    "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_BRIG_ID}",
+    "WEBAWESOME_NPM_TOKEN": "${localEnv:WEB_AWESOME_BRIGID_NPM_TOKEN}"
+  },
+  "remoteEnv": {
+    "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_BRIG_ID}",
+    "WEBAWESOME_NPM_TOKEN": "${localEnv:WEB_AWESOME_BRIGID_NPM_TOKEN}"
+  },
+  "features": {
+    // ── Dev environment ──────────────────────────────────────────────────────
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    // ── Rust (stable) ────────────────────────────────────────────────────────
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "stable",
+      "profile": "default"
+    },
+    // ── Infrastructure ───────────────────────────────────────────────────────
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    // ── helpers4 features ────────────────────────────────────────────────────
+    "ghcr.io/helpers4/devcontainer/dotfiles-sync:1": {},
+    "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
+    "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
+    "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/github-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/typescript-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/vite-plus:1": {},
+    "ghcr.io/helpers4/devcontainer/playwright-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/peon-ping:1": {
+      "packs": "peasant_fr,peon_fr,warcraft-peon"
+    },
+    "ghcr.io/helpers4/devcontainer/pnpm-store:1": {},
+    "ghcr.io/helpers4/devcontainer/claude-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/package-auto-install:1": {
+      "autoDiscover": true
+    },
+    "ghcr.io/helpers4/devcontainer/auto-header:1": {
+      "projectName": "brig⋅id",
+      "license": "LGPL-3.0-or-later"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "streetsidesoftware.code-spell-checker",
+        "timonwong.shellcheck",
+        // ── Rust ────────────────────────────────────────────────────────────
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "vadimcn.vscode-lldb",
+        "fill-labs.dependi"
+      ]
+    }
+  },
+  "forwardPorts": [
+    3000, // misc dev
+    5173, // Vite dev server (Qwik UI)
+    8080, // Axum API (Leaf)
+    5432 // PostgreSQL (Grove, future)
+  ],
+  "remoteUser": "node",
+  "postCreateCommand": "bash .devcontainer/setup-container.sh"
+}
