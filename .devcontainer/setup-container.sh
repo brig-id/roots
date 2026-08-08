@@ -7,6 +7,38 @@ if [ -d "${CARGO_TARGET_DIR:-/cargo-target}" ]; then
   sudo chown -R node:node "${CARGO_TARGET_DIR:-/cargo-target}"
 fi
 
+# /workspaces itself is created by Docker as the parent of the workspaceMount
+# target and comes out root:root — only `roots` (the bind-mounted
+# workspaceFolder) inherits node ownership from the mount. Every sibling repo
+# below is cloned fresh inside the container, so without this chown `node`
+# gets "Permission denied" creating /workspaces/<repo> for all of them.
+sudo chown node:node /workspaces
+
+# ── Git commit signing (SSH format) ─────────────────────────────────────────────
+# dotfiles-sync no longer bind-mounts ~/.ssh from the host (see devcontainer.json),
+# so the public-key file that user.signingkey points at never lands in the
+# container — even though VS Code/Codespaces still forward the host's ssh-agent
+# (SSH_AUTH_SOCK) for the actual signing operation. Recover just that one public
+# key — it isn't sensitive — from whatever the forwarded agent already has
+# loaded, matched to git's configured user.email. Generic across teammates:
+# nothing here is hardcoded to a specific key filename.
+if [ "$(git config --get gpg.format 2>/dev/null || true)" = "ssh" ]; then
+  signingkey_path="$(git config --get user.signingkey 2>/dev/null || true)"
+  signingkey_path="${signingkey_path/#\~/$HOME}"
+  user_email="$(git config --get user.email 2>/dev/null || true)"
+  if [ -n "$signingkey_path" ] && [ ! -f "$signingkey_path" ] && [ -n "$user_email" ] \
+    && command -v ssh-add >/dev/null 2>&1; then
+    if pubkey="$(ssh-add -L 2>/dev/null | grep " ${user_email}\$")" && [ -n "$pubkey" ]; then
+      mkdir -p "$(dirname "$signingkey_path")"
+      echo "$pubkey" > "$signingkey_path"
+      chmod 644 "$signingkey_path"
+      echo "✓ Recovered SSH signing public key for commit signing ($signingkey_path)."
+    else
+      echo "! Commit signing key missing ($signingkey_path) and no matching key in ssh-agent — commits will fail to sign."
+    fi
+  fi
+fi
+
 ORG="${BRIG_ID_ORG:-brig-id}"
 REPOS="${BRIG_ID_REPOS:-.github}"
 

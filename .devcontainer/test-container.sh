@@ -148,7 +148,13 @@ check_cmd mkcert "mkcert (local HTTPS for server-leaf / app dev)"
 echo ""
 echo "── Workspace repos ──"
 
-for repo in roots .github crypto core server-leaf server-grove server-forest spec app; do
+if [ -w /workspaces ]; then
+  ok "/workspaces — writable by $(whoami) (sibling repos can be cloned)"
+else
+  fail "/workspaces — not writable by $(whoami) (sibling clones will fail with 'Permission denied'; re-run setup-container.sh)"
+fi
+
+for repo in roots .github crypto core server-leaf server-grove server-forest spec app .dev; do
   if [ -d "/workspaces/$repo" ]; then
     ok "/workspaces/$repo"
   else

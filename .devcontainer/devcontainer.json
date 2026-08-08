@@ -12,7 +12,10 @@
   ],
   "containerEnv": {
     "BRIG_ID_ORG": "brig-id",
-    "BRIG_ID_REPOS": ".github crypto core server-leaf server-grove server-forest spec app",
+    // .dev is the legacy pre-`roots` devcontainer repo, kept here temporarily
+    // only until its CLI (the `brigid` binary) is migrated into `roots` —
+    // remove it from this list once that migration is done.
+    "BRIG_ID_REPOS": ".github crypto core server-leaf server-grove server-forest spec app .dev",
     // Redirect all Rust target/ dirs to the dedicated volume (never on the host)
     "CARGO_TARGET_DIR": "/cargo-target",
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_BRIG_ID}",

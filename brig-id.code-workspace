@@ -5,6 +5,10 @@
       "path": "."
     },
     {
+      "name": "🗄️ .dev (legacy, CLI migration)",
+      "path": "../.dev"
+    },
+    {
       "name": "📦 .github",
       "path": "../.github"
     },
