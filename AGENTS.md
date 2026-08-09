@@ -31,6 +31,7 @@ codespace from.
 | --- | --- | --- |
 | `/workspaces/roots` | `brig-id/roots` | This repo — orchestration |
 | `/workspaces/.github` | `brig-id/.github` | Org-level GitHub config + reusable workflows |
+| `/workspaces/cli` | `brig-id/cli` | `brigid` dev orchestrator CLI |
 | `/workspaces/crypto` | `brig-id/crypto` | Cryptographic primitives |
 | `/workspaces/core` | `brig-id/core` | Business logic crates |
 | `/workspaces/server-leaf` | `brig-id/server-leaf` | Single-server deployment binary |
@@ -38,6 +39,7 @@ codespace from.
 | `/workspaces/server-forest` | `brig-id/server-forest` | Global federation layer (future) |
 | `/workspaces/spec` | `brig-id/spec` | Technical specs for audit |
 | `/workspaces/app` | `brig-id/app` | Qwik UI |
+| `/workspaces/site` | `brig-id/site` | Public marketing/landing site |
 
 ## Devcontainer — available tools
 

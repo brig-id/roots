@@ -12,12 +12,18 @@
   ],
   "containerEnv": {
     "BRIG_ID_ORG": "brig-id",
-    // .dev is the legacy pre-`roots` devcontainer repo, kept here temporarily
-    // only until its CLI (the `brigid` binary) is migrated into `roots` —
-    // remove it from this list once that migration is done.
-    "BRIG_ID_REPOS": ".github crypto core server-leaf server-grove server-forest spec app .dev",
+    "BRIG_ID_REPOS": ".github cli crypto core server-leaf server-grove server-forest spec app site",
     // Redirect all Rust target/ dirs to the dedicated volume (never on the host)
     "CARGO_TARGET_DIR": "/cargo-target",
+    // Cargo defaults to one parallel rustc job per logical CPU. On a
+    // resource-constrained Docker Desktop/Codespaces machine that can spawn
+    // more concurrent codegen processes than available RAM supports —
+    // this workspace's dependency graph (sqlx macros, tonic/prost codegen,
+    // ml-kem/ml-dsa, rustls, axum, ...) makes that easy to hit, and the
+    // container (or the whole Docker daemon) can crash under the memory
+    // pressure. Capping at 4 trades some build parallelism for headroom;
+    // bump it back up if you know the host has RAM to spare.
+    "CARGO_BUILD_JOBS": "4",
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_BRIG_ID}",
     "WEBAWESOME_NPM_TOKEN": "${localEnv:WEB_AWESOME_BRIGID_NPM_TOKEN}"
   },

@@ -17,13 +17,15 @@ configuration and documentation only.
 brig-id/
 ├── roots/          # this repo — workspace, devcontainer, AI guidance
 ├── .github/        # org-wide GitHub defaults and reusable workflows
+├── cli/            # brigid dev orchestrator CLI
 ├── crypto/         # cryptographic primitives
 ├── core/           # business logic crates
 ├── server-leaf/    # single-server deployment binary
 ├── server-grove/   # multi-server orchestration (future)
 ├── server-forest/  # global federation layer (future)
 ├── spec/           # technical specs for audit
-└── app/            # Qwik UI
+├── app/            # Qwik UI
+└── site/           # public marketing/landing site
 ```
 
 ## Quick start — GitHub Codespaces (recommended)

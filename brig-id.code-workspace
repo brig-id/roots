@@ -5,12 +5,12 @@
       "path": "."
     },
     {
-      "name": "🗄️ .dev (legacy, CLI migration)",
-      "path": "../.dev"
-    },
-    {
       "name": "📦 .github",
       "path": "../.github"
+    },
+    {
+      "name": "🛠️ cli",
+      "path": "../cli"
     },
     {
       "name": "🔐 crypto",
@@ -39,6 +39,10 @@
     {
       "name": "🌐 app",
       "path": "../app"
+    },
+    {
+      "name": "🖼️ site",
+      "path": "../site"
     }
   ],
   "settings": {

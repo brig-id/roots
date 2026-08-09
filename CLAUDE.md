@@ -14,6 +14,7 @@ local Docker Desktop/WSL2), and open together in `brig-id.code-workspace`:
 | ---- | ---- | ---- |
 | `/workspaces/roots` | `roots` | Orchestration — canonical AGENTS.md, devcontainer |
 | `/workspaces/.github` | `.github` | Org-level GitHub config + reusable workflows |
+| `/workspaces/cli` | `cli` | `brigid` dev orchestrator CLI |
 | `/workspaces/crypto` | `crypto` | Cryptographic primitives |
 | `/workspaces/core` | `core` | Business logic crates |
 | `/workspaces/server-leaf` | `server-leaf` | Single-server deployment binary |
@@ -21,6 +22,7 @@ local Docker Desktop/WSL2), and open together in `brig-id.code-workspace`:
 | `/workspaces/server-forest` | `server-forest` | Global federation layer (future) |
 | `/workspaces/spec` | `spec` | Technical specs for audit |
 | `/workspaces/app` | `app` | Qwik UI |
+| `/workspaces/site` | `site` | Public marketing/landing site |
 
 ## Common commands (run from any product repo)
 
@@ -58,10 +60,12 @@ expected state.
 starting product work — TODOs, backlog ideas, and release/phase status live there as cards,
 not in local files, per AGENTS.md's Rules section.
 
-**Git workflow**: `main` and `dev/*` are protected — never push directly. Branch from `dev/*`
-(`feat/*`/`bug/*`) or from `main` for an urgent prod fix (`hotfix/*`). Every merge is rebase +
-fast-forward only — rebase onto the target's tip before merging, no merge commits, no squash.
-See AGENTS.md's Git Workflow section.
+**Git workflow**: for `roots` and `.github` specifically — meta/orchestration repos with no
+shipped product code — push straight to `main`, no PR needed; that's a standing preference, not
+a one-off. Every other repo (`cli`, `crypto`, `core`, `server-leaf`, `spec`, `app`, `site`) keeps
+`main`/`dev/*` protected: branch from `dev/*` (`feat/*`/`bug/*`) or from `main` for an urgent prod
+fix (`hotfix/*`). Every merge is rebase + fast-forward only — rebase onto the target's tip before
+merging, no merge commits, no squash. See AGENTS.md's Git Workflow section.
 
 ## AI persistence
 

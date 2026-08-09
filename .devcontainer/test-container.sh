@@ -154,7 +154,7 @@ else
   fail "/workspaces — not writable by $(whoami) (sibling clones will fail with 'Permission denied'; re-run setup-container.sh)"
 fi
 
-for repo in roots .github crypto core server-leaf server-grove server-forest spec app .dev; do
+for repo in roots .github cli crypto core server-leaf server-grove server-forest spec app site; do
   if [ -d "/workspaces/$repo" ]; then
     ok "/workspaces/$repo"
   else
