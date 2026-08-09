@@ -103,13 +103,32 @@ rustup target add wasm32-unknown-unknown
 echo "✓ Rust toolchain ready (stable + nightly, wasm32)."
 
 # ── cargo-binstall ─────────────────────────────────────────────────────────────
+# Pinned to a specific release and verified against cargo-binstall's own
+# minisign signature, instead of piping the unpinned `main`-branch install
+# script into bash: that script has no integrity check of its own, so a
+# compromised branch would execute arbitrary code on every container build.
+# Bump CARGO_BINSTALL_VERSION deliberately when upgrading.
+CARGO_BINSTALL_VERSION="1.21.1"
 if ! command -v cargo-binstall >/dev/null 2>&1; then
   echo ""
-  echo "Installing cargo-binstall (fast pre-compiled binaries)..."
-  curl -L --proto '=https' --tlsv1.2 -sSf \
-    https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh \
-    | bash
-  echo "✓ cargo-binstall ready."
+  echo "Installing cargo-binstall v${CARGO_BINSTALL_VERSION} (minisign-verified)..."
+  sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends minisign
+  binstall_tmp="$(mktemp -d)"
+  binstall_base_url="https://github.com/cargo-bins/cargo-binstall/releases/download/v${CARGO_BINSTALL_VERSION}"
+  binstall_asset="cargo-binstall-x86_64-unknown-linux-gnu.tgz"
+  curl -L --proto '=https' --tlsv1.2 -sSf -o "${binstall_tmp}/asset.tgz" \
+    "${binstall_base_url}/${binstall_asset}"
+  curl -L --proto '=https' --tlsv1.2 -sSf -o "${binstall_tmp}/asset.tgz.sig" \
+    "${binstall_base_url}/${binstall_asset}.sig"
+  curl -L --proto '=https' --tlsv1.2 -sSf -o "${binstall_tmp}/minisign.pub" \
+    "${binstall_base_url}/minisign.pub"
+  minisign -Vm "${binstall_tmp}/asset.tgz" -p "${binstall_tmp}/minisign.pub" \
+    -x "${binstall_tmp}/asset.tgz.sig"
+  tar -xzf "${binstall_tmp}/asset.tgz" -C "${binstall_tmp}"
+  mkdir -p "${CARGO_HOME:-$HOME/.cargo}/bin"
+  install -m 755 "${binstall_tmp}/cargo-binstall" "${CARGO_HOME:-$HOME/.cargo}/bin/cargo-binstall"
+  rm -rf "${binstall_tmp}"
+  echo "✓ cargo-binstall v${CARGO_BINSTALL_VERSION} installed and signature-verified."
 fi
 
 # ── Rust tools via pre-compiled binaries ──────────────────────────────────────
