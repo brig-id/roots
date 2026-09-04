@@ -60,12 +60,18 @@ expected state.
 starting product work — TODOs, backlog ideas, and release/phase status live there as cards,
 not in local files, per AGENTS.md's Rules section.
 
-**Git workflow**: for `roots` and `.github` specifically — meta/orchestration repos with no
-shipped product code — push straight to `main`, no PR needed; that's a standing preference, not
-a one-off. Every other repo (`cli`, `crypto`, `core`, `server-leaf`, `spec`, `app`, `site`) keeps
-`main`/`dev/*` protected: branch from `dev/*` (`feat/*`/`bug/*`) or from `main` for an urgent prod
-fix (`hotfix/*`). Every merge is rebase + fast-forward only — rebase onto the target's tip before
-merging, no merge commits, no squash. See AGENTS.md's Git Workflow section.
+**Git workflow**: never push to `origin` on any brig·id repo, `roots`/`.github` included, without
+the user's explicit go-ahead each time — there is no standing exception for pushing straight to
+`main`. Every repo (`cli`, `crypto`, `core`, `server-leaf`, `spec`, `app`, `site`, and `roots`/
+`.github` too) keeps `main`/`dev/*` protected: branch from `dev/*` (`feat/*`/`bug/*`) or from
+`main` for an urgent prod fix (`hotfix/*`). Every merge is rebase + fast-forward only — rebase
+onto the target's tip before merging, no merge commits, no squash. See AGENTS.md's Git Workflow
+section.
+
+A narrow, temporary carve-out may be granted in conversation for a specific piece of work (e.g.
+"push fix commits straight to `main` while we get the server-leaf deploy unblocked") — treat that
+as scoped to exactly what was said (that repo, that kind of commit, that task), never as a
+precedent to reuse elsewhere or later without asking again.
 
 ## AI persistence
 
