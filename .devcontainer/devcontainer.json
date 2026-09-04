@@ -3,6 +3,10 @@
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
   "workspaceFolder": "/workspaces/roots",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/roots,type=bind,consistency=cached",
+  // bitwarden-secrets-manager feature bind-mounts $HOME/.config/bws/ from the
+  // host for bws state; Docker refuses to bind a source dir that doesn't
+  // exist yet, so it must be created before the container starts.
+  "initializeCommand": "mkdir -p \"$HOME/.config/bws\"",
   "mounts": [
     // ── cargo cache (named volumes — nothing on the host) ──────────────────────
     "source=brigid-cargo-registry,target=/home/node/.cargo/registry,type=volume",
@@ -44,7 +48,7 @@
     // ── Secrets ──────────────────────────────────────────────────────────────
     // Installs `bws` (Bitwarden Secrets Manager CLI) so BWS_ACCESS_TOKEN
     // (see containerEnv above) can pull the leaf master key non-interactively.
-    "ghcr.io/sliekens/devcontainer-features/bitwarden-secrets-manager:1": {},
+    // "ghcr.io/sliekens/devcontainer-features/bitwarden-secrets-manager:1": {},
     // ── Dev ──────────────────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
     "ghcr.io/helpers4/devcontainer/github-dev:1": {},
