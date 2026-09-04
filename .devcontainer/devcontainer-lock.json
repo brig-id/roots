@@ -26,9 +26,9 @@
       "integrity": "sha256:0c68dc8549082a716cc8de7e52033511d3e0eb24c639dad010459327c65e2743"
     },
     "ghcr.io/helpers4/devcontainer/claude-dev:1": {
-      "version": "1.0.7",
-      "resolved": "ghcr.io/helpers4/devcontainer/claude-dev@sha256:cc9ffab123a63f78e31c49ef2cb7e1b325bb6a62f90392492af0211fd0e5f0e6",
-      "integrity": "sha256:cc9ffab123a63f78e31c49ef2cb7e1b325bb6a62f90392492af0211fd0e5f0e6"
+      "version": "1.0.8",
+      "resolved": "ghcr.io/helpers4/devcontainer/claude-dev@sha256:0f33532a97e6e64a1bcd9850344b987c81e085b024542867c009a5495510e2d4",
+      "integrity": "sha256:0f33532a97e6e64a1bcd9850344b987c81e085b024542867c009a5495510e2d4"
     },
     "ghcr.io/helpers4/devcontainer/cline-dev:1": {
       "version": "1.0.0",
@@ -59,9 +59,9 @@
       "integrity": "sha256:9f5b93e5f2f4be868b52754b3bb9e3f3ac8a44f13418d61a1fff0d5618a5893b"
     },
     "ghcr.io/helpers4/devcontainer/mistral-dev:1": {
-      "version": "1.0.5",
-      "resolved": "ghcr.io/helpers4/devcontainer/mistral-dev@sha256:d5d9fd8062c9ba929eef5320cf660d0c31a17a0bd27174ac64a2673470f91a60",
-      "integrity": "sha256:d5d9fd8062c9ba929eef5320cf660d0c31a17a0bd27174ac64a2673470f91a60"
+      "version": "1.0.6",
+      "resolved": "ghcr.io/helpers4/devcontainer/mistral-dev@sha256:88ee1f2160eb5daff1ae5655836e1d72af26d1bc7b7e96a4bbcc98b44043569b",
+      "integrity": "sha256:88ee1f2160eb5daff1ae5655836e1d72af26d1bc7b7e96a4bbcc98b44043569b"
     },
     "ghcr.io/helpers4/devcontainer/nub:1": {
       "version": "1.0.0",
