@@ -41,6 +41,10 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
       "moby": false
     },
+    // ── Secrets ──────────────────────────────────────────────────────────────
+    // Installs `bws` (Bitwarden Secrets Manager CLI) so BWS_ACCESS_TOKEN
+    // (see containerEnv above) can pull the leaf master key non-interactively.
+    "ghcr.io/sliekens/devcontainer-features/bitwarden-secrets-manager:1": {},
     // ── Dev ──────────────────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
     "ghcr.io/helpers4/devcontainer/github-dev:1": {},
