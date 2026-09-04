@@ -34,45 +34,41 @@
     "BWS_ACCESS_TOKEN": "${localEnv:BITWARDEN_BRIGID_MACHINE_TOKEN}"
   },
   "features": {
-    // ── Dev environment ──────────────────────────────────────────────────────
+    // ── Infrastructure ───────────────────────────────────────────────────────
+    "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
     "ghcr.io/devcontainers/features/git-lfs:1": {},
-    // ── Rust (stable) ────────────────────────────────────────────────────────
+    "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    // ── Dev ──────────────────────────────────────────────────────────────────
+    "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/github-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/auto-header:1": {
+      "projectName": "brig⋅id",
+      "license": "LGPL-3.0-or-later"
+    },
+    // ── AI ───────────────────────────────────────────────────────────────────
+    "ghcr.io/helpers4/devcontainer/claude-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/mistral-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/cline-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/peon-ping:1": {
+      "packsLang": "fr"
+    },
+    // ── Rust ─────────────────────────────────────────────────────────────────
     "ghcr.io/devcontainers/features/rust:1": {
       "version": "stable",
       "profile": "default"
     },
-    // ── Infrastructure ───────────────────────────────────────────────────────
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-      "moby": false
-    },
-    // ── helpers4 features ────────────────────────────────────────────────────
-    // dotfiles-sync deliberately NOT included: it bind-mounts the host's
-    // ~/.gitconfig, ~/.ssh, ~/.gnupg, ~/.npmrc, ~/.aws, ~/.kube, ~/.docker
-    // config into the container, assuming a local Docker Desktop/WSL2 host.
-    // On GitHub Codespaces there is no such host — those mount sources
-    // resolve to nonexistent root-relative paths (/.gitconfig, etc.), and
-    // Docker refuses to create the container at all when a bind mount's
-    // source is missing. This is why the container creation failed outright
-    // on Codespaces (see the "invalid mount config ... /.gitconfig" error).
-    "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
-    "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
-    "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
-    "ghcr.io/helpers4/devcontainer/github-dev:1": {},
+    // ── JavaScript / Qwik ────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/typescript-dev:1": {},
-    "ghcr.io/helpers4/devcontainer/vite-plus:1": {},
-    "ghcr.io/helpers4/devcontainer/playwright-dev:1": {},
-    "ghcr.io/helpers4/devcontainer/peon-ping:1": {
-      "packs": "peasant_fr,peon_fr,warcraft-peon"
-    },
     "ghcr.io/helpers4/devcontainer/pnpm-store:1": {},
-    "ghcr.io/helpers4/devcontainer/claude-dev:1": {},
     "ghcr.io/helpers4/devcontainer/package-auto-install:1": {
       "autoDiscover": true
     },
-    "ghcr.io/helpers4/devcontainer/auto-header:1": {
-      "projectName": "brig⋅id",
-      "license": "LGPL-3.0-or-later"
-    }
+    "ghcr.io/helpers4/devcontainer/vite-plus:1": {},
+    "ghcr.io/helpers4/devcontainer/playwright-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/nub:1": {}
   },
   "customizations": {
     "vscode": {
