@@ -87,9 +87,12 @@ cargo +nightly fuzz run fuzz_decrypt -- -max_total_time=60
 - Treat this repository as configuration/documentation only — no product
   runtime code and no CLI tooling here.
 - Add future repositories as siblings of `roots/`, not nested inside it.
-- Update `brig-id.code-workspace` and `.devcontainer/devcontainer.json`
-  (both the `mounts`/`BRIG_ID_REPOS` and the workspace `folders` list)
-  together when a new sibling repository is added.
+- Update **all four** of these together when a new sibling repository is added — each keeps its
+  own hardcoded repo list and none of them read from another:
+  - `.devcontainer/devcontainer.json` (`mounts`, `BRIG_ID_REPOS`)
+  - `brig-id.code-workspace` (the `folders` list)
+  - `.devcontainer/test-container.sh` (the `for repo in ...` loop)
+  - `cli/repos.json`
 - Do not implement the product plan here unless the task is explicitly about shared tooling.
 - Track TODOs, backlog ideas, and release/phase status as cards in
   [Project 1](https://github.com/orgs/brig-id/projects/1), not as local
