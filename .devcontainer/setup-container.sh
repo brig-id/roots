@@ -39,6 +39,17 @@ if [ "$(git config --get gpg.format 2>/dev/null || true)" = "ssh" ]; then
   fi
 fi
 
+# ── diff-so-fancy (git pager) ────────────────────────────────────────────────
+# Global ~/.gitconfig sets core.pager = "diff-so-fancy | less ..." (from a
+# devcontainer feature) but never installs the binary itself, so every
+# `git log`/`git diff` in an interactive terminal fails outright. Not an
+# issue for non-TTY tool invocations (git auto-disables the pager there),
+# which is why this went unnoticed for a while.
+if ! command -v diff-so-fancy >/dev/null 2>&1; then
+  npm install -g diff-so-fancy >/dev/null 2>&1
+  echo "✓ diff-so-fancy installed (fixes the git pager)."
+fi
+
 ORG="${BRIG_ID_ORG:-brig-id}"
 REPOS="${BRIG_ID_REPOS:-.github}"
 

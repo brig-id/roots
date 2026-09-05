@@ -6,3 +6,17 @@ node_modules
 mkcert-rootCA.pem
 .env*
 !.env.sample
+
+# Claude Code runtime state — was only in .git/info/exclude (local-only,
+# lost on every fresh clone/Codespace). Tracked here so it actually
+# survives.
+**/.claude/scheduled_tasks.lock
+**/.claude/scheduled_tasks.json
+**/.claude/routines/.state/
+**/.claude/worktrees/
+**/.claude/checkpoints/
+**/.claude/mailbox/
+**/.claude/agent-registry.json
+**/.claude/agent-memory-local
+**/.claude/first-run
+**/.claude/assistant-daemon-state.json
