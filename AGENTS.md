@@ -142,7 +142,7 @@ Every merge is **rebase + fast-forward only** — no merge commits, no squash me
 | `main` | Production | Permanent |
 | `dev/*` (e.g. `dev/2026-08`) | Internal/staging release train | One per cycle — deleted after merging into `main` |
 | `hotfix/*` | Urgent production fix, bypasses `dev/*` | One per fix — deleted after merging into `main` |
-| `feat/*`, `bug/*` | Regular work | One per change — deleted after merging into the current `dev/*` |
+| `feat/*`, `fix/*` | Regular work | One per change — deleted after merging into the current `dev/*` |
 
 **Merging (always via PR, never a direct push to `main` or `dev/*`):**
 
@@ -153,6 +153,20 @@ Every merge is **rebase + fast-forward only** — no merge commits, no squash me
   new `main` before its own merge — fast-forward tolerates no divergence.
 - Releases are tracked with **tags on `main`** (there's no merge commit to mark them, since every
   merge is a fast-forward).
+
+**Release checklist** — the tag, `CHANGELOG.md`, and `Cargo.toml`'s `version` must always tell the
+same story. Skipping the version bump has happened more than once (a tagged release shipped with
+the *previous* version still in `Cargo.toml`) — always do these in order, in the same PR that
+lands on `main`:
+
+1. Bump `version` in `Cargo.toml` (workspace-level for a cargo workspace).
+2. Add the release's entry to `CHANGELOG.md`.
+3. Merge to `main`, then tag `vX.Y.Z` on the resulting commit.
+
+Never pin another repo's git dependency to a bare commit `rev` that isn't reachable from a tag —
+this workflow's rebase+fast-forward merges rewrite SHAs, so an unreached commit can become
+permanently unfetchable once the source repo garbage-collects it. Pin `tag = "vX.Y.Z"` instead
+(or, if no tag exists yet for the content you need, treat that as a signal to cut one).
 
 ## Inheritance
 
