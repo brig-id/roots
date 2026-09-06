@@ -80,6 +80,28 @@ done
 
 echo "✓ Workspace repos ready."
 
+# ── Bitwarden Secrets Manager — fetch the "Credentials" project ────────────────
+# Third-party API credentials (Unsplash, Font Awesome, Web Awesome) live in BWS
+# instead of a committed or host-copied .env file. BWS_ACCESS_TOKEN itself must
+# still come from the host (containerEnv) — bootstrapping secrets access from
+# secrets access is circular — but everything downstream of it is fetched here.
+if [ -n "${BWS_ACCESS_TOKEN:-}" ] && [ -n "${BITWARDEN_PROJECT_CREDENTIALS_ID:-}" ] && command -v bws >/dev/null 2>&1; then
+  echo ""
+  echo "Fetching secrets from Bitwarden (Credentials project)..."
+  bws_env_file="$HOME/.bws-credentials.env"
+  bws secret list "${BITWARDEN_PROJECT_CREDENTIALS_ID}" --output json \
+    | jq -r '.[] | "export \(.key)=\(.value | @sh)"' > "${bws_env_file}"
+  chmod 600 "${bws_env_file}"
+  # shellcheck disable=SC1090
+  source "${bws_env_file}"
+  if ! grep -qF "${bws_env_file}" ~/.bashrc 2>/dev/null; then
+    echo "[ -f ${bws_env_file} ] && source ${bws_env_file}" >> ~/.bashrc
+  fi
+  echo "✓ Bitwarden secrets loaded into $(basename "${bws_env_file}") ($(wc -l < "${bws_env_file}") vars)."
+else
+  echo "! Skipping Bitwarden secret fetch (BWS_ACCESS_TOKEN or BITWARDEN_PROJECT_CREDENTIALS_ID not set)."
+fi
+
 # ── Web Awesome Pro npm registry auth ───────────────────────────────────────────
 # `app/.npmrc` (committed) points `@web.awesome.me` at the private Cloudsmith
 # registry but deliberately omits the auth token — pnpm won't expand env vars
