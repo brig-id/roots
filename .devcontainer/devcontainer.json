@@ -25,11 +25,13 @@
     // bump it back up if you know the host has RAM to spare.
     "CARGO_BUILD_JOBS": "4",
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_BRIG_ID}",
-    "WEBAWESOME_NPM_TOKEN": "${localEnv:WEB_AWESOME_BRIGID_NPM_TOKEN}",
-    "BWS_ACCESS_TOKEN": "${localEnv:BITWARDEN_BRIGID_MACHINE_TOKEN}"
+    "BWS_ACCESS_TOKEN": "${localEnv:BITWARDEN_BRIGID_MACHINE_TOKEN}",
+    "BITWARDEN_IDENTITY_URL": "${localEnv:BITWARDEN_BRIGID_IDENTITY_URL}",
+    "BITWARDEN_API_URL": "${localEnv:BITWARDEN_BRIGID_API_URL}",
+    "BITWARDEN_ORG_ID": "${localEnv:BITWARDEN_BRIGID_ORG_ID}",
+    "BITWARDEN_PROJECT_CREDENTIALS_ID": "${localEnv:BITWARDEN_BRIGID_PROJECT_CREDENTIALS_ID}",
+    "BITWARDEN_PROJECT_LEAF_ID": "${localEnv:BITWARDEN_BRIGID_PROJECT_LEAF_ID}"
   },
-  // `remoteEnv` used to duplicate this exact block — `containerEnv` alone
-  // already reaches lifecycle hooks, terminals, and remote tooling alike;
   // `remoteEnv` is only needed when a var must differ between the two.
   "features": {
     // ── Infrastructure ───────────────────────────────────────────────────────
