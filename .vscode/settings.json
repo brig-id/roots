@@ -4,6 +4,8 @@
     "workspace",
     "devcontainer",
     "ai",
-    "ci"
+    "ci",
+    "deps",
+    "docs"
   ]
 }

@@ -82,6 +82,19 @@ cargo llvm-cov --workspace --summary-only
 cargo +nightly fuzz run fuzz_decrypt -- -max_total_time=60
 ```
 
+## Code Comments
+
+Write comments for someone reading the code cold — they never see the diff or the previous
+version, only what's in front of them. Describe what the code *is* and *why* it's that way,
+never what changed to get there.
+
+- ❌ `contents: write # was read-only — this job now also commits X`
+- ✅ `contents: write # commits X`
+
+If a comment needs "was"/"before"/"previously"/"now" (or a timestamp: "as of writing", "since
+last month") to make sense, that content belongs in the commit message or PR description, not
+the code — it rots the moment someone reads the file without the diff in front of them.
+
 ## Rules
 
 - Treat this repository as configuration/documentation only — no product
@@ -118,11 +131,12 @@ also read by the `/commit` slash command):
 
 | Scope | Maps to |
 | --- | --- |
-| `memory` | `memory/` — persistent agent memory files |
 | `workspace` | `brig-id.code-workspace`, root-level config |
 | `devcontainer` | `.devcontainer/` |
 | `ai` | Agent guidance, prompt files |
 | `ci` | `.github/workflows/` (if any) |
+| `deps` | Dependency bumps |
+| `docs` | Documentation-only changes |
 
 **Do not use a scope outside this list.** If a new top-level concern is added,
 update `scopes.json` (and this table) and `.vscode/settings.json` together.
@@ -187,3 +201,6 @@ This repo's *shape* (`CLAUDE.md`, `scopes.json`, `commit-convention.json`,
 - Sibling repos are cloned in `postCreateCommand`, never bind-mounted from the host — a
   deliberate change from an earlier revision of this repo (then named `.dev`) so the
   devcontainer works on GitHub Codespaces, not just local Docker Desktop/WSL2.
+- No `memory` scope — an earlier revision reserved one for `memory/` (persistent agent memory
+  files), but that directory was never created and the scope was unused; dropped from
+  `scopes.json` and this table until a real use appears.
