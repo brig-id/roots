@@ -76,6 +76,10 @@ precedent to reuse elsewhere or later without asking again.
 The agent itself never performs merges — not even the fast-forward merges this repo's own
 workflow requires. Merging is always a human or CI action; the agent's job stops at opening the PR.
 
+Always create the branch (`git checkout -b <name>`) before the first commit — never commit while
+on `main` and rename the branch afterward, which can leave its upstream tracking pointed at
+`origin/main` and let a later push land directly on `main` unnoticed.
+
 ## AI persistence
 
 `~/.claude` is bind-mounted from a **per-devcontainer** volume and symlinked at
