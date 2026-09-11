@@ -73,7 +73,12 @@ A narrow, temporary carve-out may be granted in conversation for a specific piec
 as scoped to exactly what was said (that repo, that kind of commit, that task), never as a
 precedent to reuse elsewhere or later without asking again.
 
+The agent itself never performs merges — not even the fast-forward merges this repo's own
+workflow requires. Merging is always a human or CI action; the agent's job stops at opening the PR.
+
 ## AI persistence
 
-`~/.claude` is bind-mounted from the host and symlinked at every container start by
-`claude-dev`. Memory, credentials, and settings survive all rebuilds.
+`~/.claude` is bind-mounted from a **per-devcontainer** volume and symlinked at
+every container start by `claude-dev` — isolated to this project, not shared
+with any other org's devcontainer. Memory, credentials, and settings survive
+rebuilds of this same devcontainer.
