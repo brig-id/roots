@@ -8,6 +8,19 @@ This repository is the **shared workspace** for the brig·id organization.
 doc-comments, commit messages, issues, pull requests, specs, and configuration.
 This rule applies to every sibling repository. No exceptions.
 
+## Code Comments
+
+Write comments for someone reading the code cold — they never see the diff or the previous
+version, only what's in front of them. Describe what the code *is* and *why* it's that way,
+never what changed to get there.
+
+- ❌ `contents: write # was read-only — this job now also commits X`
+- ✅ `contents: write # commits X`
+
+If a comment needs "was"/"before"/"previously"/"now" (or a timestamp: "as of writing", "since
+last month") to make sense, that content belongs in the commit message or PR description, not
+the code — it rots the moment someone reads the file without the diff in front of them.
+
 ## Scope
 
 - VS Code multi-root workspace (`brig-id.code-workspace`)
@@ -20,12 +33,11 @@ orchestrator CLI here; it does not live in this repo.)
 
 ## Workspace structure
 
-All repositories are cloned as siblings under `/workspaces/` by
-`.devcontainer/setup-container.sh`'s `postCreateCommand` step — nothing is
-bind-mounted from the host. This is what makes the devcontainer work
-identically on a local checkout (Docker Desktop/WSL2) and on GitHub
-Codespaces, which only ever checks out the one repo you launch the
-codespace from.
+All repositories are cloned as siblings under `/workspaces/` by the `org-workspace` devcontainer
+feature (`.devcontainer/devcontainer.json`) — only `roots` itself is bind-mounted from the host.
+This is what makes the devcontainer work identically on a local checkout (Docker Desktop/WSL2)
+and on GitHub Codespaces, which only ever checks out the one repo you launch the codespace from.
+`brig-id.code-workspace` is kept up to date by the same feature.
 
 | Path | Repo | Purpose |
 | --- | --- | --- |
@@ -67,34 +79,6 @@ not in local files: **[brig-id Project 1](https://github.com/orgs/brig-id/projec
 before starting product work. Open a card there for new work instead of adding a
 local TODO/roadmap file.
 
-## Common commands
-
-```bash
-# Run from any product repo
-cargo test --workspace
-cargo clippy --all-targets --all-features -- -D warnings
-cargo fmt --all --check
-cargo audit
-cargo deny check
-cargo llvm-cov --workspace --summary-only
-
-# Run fuzzing (nightly required)
-cargo +nightly fuzz run fuzz_decrypt -- -max_total_time=60
-```
-
-## Code Comments
-
-Write comments for someone reading the code cold — they never see the diff or the previous
-version, only what's in front of them. Describe what the code *is* and *why* it's that way,
-never what changed to get there.
-
-- ❌ `contents: write # was read-only — this job now also commits X`
-- ✅ `contents: write # commits X`
-
-If a comment needs "was"/"before"/"previously"/"now" (or a timestamp: "as of writing", "since
-last month") to make sense, that content belongs in the commit message or PR description, not
-the code — it rots the moment someone reads the file without the diff in front of them.
-
 ## Rules
 
 - Treat this repository as configuration/documentation only — no product
@@ -114,15 +98,25 @@ the code — it rots the moment someone reads the file without the diff in front
 ## Commit conventions
 
 Format: `type(scope): <emoji> description`
+([Conventional Commits](https://www.conventionalcommits.org/) + [gitmoji](https://gitmoji.dev))
 
-| Type | Emoji | When |
-| --- | --- | --- |
-| `feat` | ✨ | New feature or file |
-| `fix` | 🐛 | Correction |
-| `docs` | 📝 | Documentation only |
-| `chore` | 🔧 | Maintenance, config |
-| `ci` | 👷 | CI/CD |
-| `revert` | ⏪ | Reverts a previous commit |
+- Description ≤72 chars, lowercase, imperative mood, no trailing period
+- Exactly ONE emoji, between the colon and the description
+- Several logical changes → one dominant type in the subject, a bullet list in the body
+
+| Type | Emoji | Alternatives | When |
+| ---- | ----- | ------------ | ---- |
+| `feat` | ✨ | 🚸 UX · ♿️ a11y · 🌐 i18n · 💬 text | New feature |
+| `fix` | 🐛 | 🚑️ hotfix · 🔒️ security · 🩹 trivial · 🥅 errors · 🚨 warnings · ✏️ typo | Bug fix |
+| `docs` | 📝 | 💡 comments · 📄 license | Documentation |
+| `refactor` | ♻️ | 🎨 structure · 🔥 remove · ⚰️ dead code · 🚚 move/rename | Refactor |
+| `test` | ✅ | 🧪 failing · 💚 fix CI | Tests |
+| `chore` | 🔧 | 🙈 gitignore · 🔖 release · 📌 pin deps · 🩺 healthcheck | Maintenance |
+| `perf` | ⚡️ | | Performance |
+| `style` | 💄 | 🎨 code style | Style |
+| `ci` | 👷 | 💚 fix CI | CI/CD |
+| `build` | 📦️ | ➕ add · ➖ remove · ⬆️ upgrade · ⬇️ downgrade dep | Build |
+| `revert` | ⏪️ | | Revert |
 
 ### Allowed scopes
 
@@ -185,6 +179,21 @@ this workflow's rebase+fast-forward merges rewrite SHAs, so an unreached commit 
 permanently unfetchable once the source repo garbage-collects it. Pin `tag = "vX.Y.Z"` instead
 (or, if no tag exists yet for the content you need, treat that as a signal to cut one).
 
+## Common commands
+
+```bash
+# Run from any product repo
+cargo test --workspace
+cargo clippy --all-targets --all-features -- -D warnings
+cargo fmt --all --check
+cargo audit
+cargo deny check
+cargo llvm-cov --workspace --summary-only
+
+# Run fuzzing (nightly required)
+cargo +nightly fuzz run fuzz_decrypt -- -max_total_time=60
+```
+
 ## Inheritance
 
 This repo's *shape* (`CLAUDE.md`, `scopes.json`, `commit-convention.json`,
@@ -198,7 +207,7 @@ This repo's *shape* (`CLAUDE.md`, `scopes.json`, `commit-convention.json`,
   the TypeScript-only orgs.
 - Roadmap/phase tracking uses a GitHub Project (org-level, cross-repo) instead of
   local Markdown files — a brig·id-specific choice, not part of helpers4's template.
-- Sibling repos are cloned in `postCreateCommand`, never bind-mounted from the host — a
+- Sibling repos are cloned by the `org-workspace` devcontainer feature, never bind-mounted from the host — a
   deliberate change from an earlier revision of this repo (then named `.dev`) so the
   devcontainer works on GitHub Codespaces, not just local Docker Desktop/WSL2.
 - No `memory` scope — an earlier revision reserved one for `memory/` (persistent agent memory

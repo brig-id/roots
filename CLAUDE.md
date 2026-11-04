@@ -5,14 +5,18 @@ Full canonical rules (commit format, restrictions, language) live in
 
 ## Workspace layout
 
-All repos are cloned as siblings at `/workspaces/<name>` by
-`.devcontainer/setup-container.sh`'s `postCreateCommand` (not bind-mounted —
-this is what makes the devcontainer work on GitHub Codespaces as well as
-local Docker Desktop/WSL2), and open together in `brig-id.code-workspace`:
+All repos are cloned as siblings at `/workspaces/<name>` by the `org-workspace` devcontainer
+feature (not host bind-mounted — that's what makes the devcontainer work on GitHub Codespaces as
+well as local Docker Desktop/WSL2), and open together in `brig-id.code-workspace`. The clones live in
+a named Docker volume, so a plain "Rebuild Container" keeps uncommitted/unpushed work; only a full
+teardown (`docker volume rm`, deleted Codespace) resets them to a fresh clone of `origin/main`.
+`roots` itself is the one repo that's genuinely host bind-mounted, so it's unaffected either way.
+**This is a safety net, not a substitute for pushing** — commit and push before anything that
+could destroy the underlying Docker volumes.
 
 | Path | Repo | Role |
 | ---- | ---- | ---- |
-| `/workspaces/roots` | `roots` | Orchestration — canonical AGENTS.md, devcontainer |
+| `/workspaces/roots` | `roots` | This repo — orchestration |
 | `/workspaces/.github` | `.github` | Org-level GitHub config + reusable workflows |
 | `/workspaces/cli` | `cli` | `brigid` dev orchestrator CLI |
 | `/workspaces/crypto` | `crypto` | Cryptographic primitives |
@@ -85,4 +89,5 @@ on `main` and rename the branch afterward, which can leave its upstream tracking
 `~/.claude` is bind-mounted from a **per-devcontainer** volume and symlinked at
 every container start by `claude-dev` — isolated to this project, not shared
 with any other org's devcontainer. Memory, credentials, and settings survive
-rebuilds of this same devcontainer.
+rebuilds of this same devcontainer. Remote Control (`claude-rc status`) lets you start sessions
+in this devcontainer from claude.ai/code or the Claude mobile app.
