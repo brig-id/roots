@@ -21,7 +21,7 @@ fi
 # ── Bitwarden Secrets Manager — fetch the "Credentials" project ────────────────
 # Third-party API credentials (Unsplash, Font Awesome, Web Awesome) live in BWS
 # instead of a committed or host-copied .env file. BWS_ACCESS_TOKEN itself must
-# still come from the host (containerEnv) — bootstrapping secrets access from
+# still come from the host (remoteEnv) — bootstrapping secrets access from
 # secrets access is circular — but everything downstream of it is fetched here.
 if [ -n "${BWS_ACCESS_TOKEN:-}" ] && [ -n "${BITWARDEN_PROJECT_CREDENTIALS_ID:-}" ] && command -v bws >/dev/null 2>&1; then
   echo ""
@@ -45,7 +45,7 @@ fi
 # registry but deliberately omits the auth token — pnpm won't expand env vars
 # from a project-tracked .npmrc, and committing a literal token is out of the
 # question. The token itself reaches the container fine via devcontainer.json's
-# containerEnv, but nothing ever wrote it into ~/.npmrc, so `pnpm install` for
+# remoteEnv, but nothing ever wrote it into ~/.npmrc, so `pnpm install` for
 # `app` 401s on that package until this runs.
 if [ -n "${WEBAWESOME_NPM_TOKEN:-}" ] && ! grep -q "npm.cloudsmith.io/fortawesome/webawesome-pro" ~/.npmrc 2>/dev/null; then
   echo ""

@@ -21,7 +21,11 @@
     // container (or the whole Docker daemon) can crash under the memory
     // pressure. Capping at 4 trades some build parallelism for headroom;
     // bump it back up if you know the host has RAM to spare.
-    "CARGO_BUILD_JOBS": "4",
+    "CARGO_BUILD_JOBS": "4"
+  },
+  // Secrets live in remoteEnv, not containerEnv: they are not baked into the container
+  // (docker run args / docker inspect) and a rotated token needs a reconnect, not a rebuild.
+  "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_BRIG_ID}",
     "BWS_ACCESS_TOKEN": "${localEnv:BITWARDEN_BRIGID_MACHINE_TOKEN}",
     "BITWARDEN_IDENTITY_URL": "${localEnv:BITWARDEN_BRIGID_IDENTITY_URL}",
@@ -30,7 +34,6 @@
     "BITWARDEN_PROJECT_CREDENTIALS_ID": "${localEnv:BITWARDEN_BRIGID_PROJECT_CREDENTIALS_ID}",
     "BITWARDEN_PROJECT_LEAF_ID": "${localEnv:BITWARDEN_BRIGID_PROJECT_LEAF_ID}"
   },
-  // `remoteEnv` is only needed when a var must differ between the two.
   "features": {
     "ghcr.io/helpers4/devcontainer/org-workspace:1": {
       "autoDiscover": "public,private,internal,fork"
