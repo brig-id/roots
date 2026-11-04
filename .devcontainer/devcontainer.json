@@ -1,6 +1,6 @@
 {
   "name": "brig·id",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:26",
   "workspaceFolder": "/workspaces/roots",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/roots,type=bind,consistency=cached",
   "mounts": [
@@ -36,7 +36,7 @@
       "autoDiscover": "public,private,internal,fork"
     },
     // ── Infrastructure ───────────────────────────────────────────────────────
-    "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
+    "ghcr.io/helpers4/devcontainer/shell-history:1": {},
     "ghcr.io/devcontainers/features/git-lfs:1": {},
     "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
@@ -58,9 +58,6 @@
     },
     "ghcr.io/helpers4/devcontainer/mistral-dev:1": {},
     "ghcr.io/helpers4/devcontainer/cline-dev:1": {},
-    "ghcr.io/helpers4/devcontainer/peon-ping:1": {
-      "packsLang": "fr"
-    },
     // ── Rust ─────────────────────────────────────────────────────────────────
     "ghcr.io/devcontainers/features/rust:1": {
       "version": "stable",
