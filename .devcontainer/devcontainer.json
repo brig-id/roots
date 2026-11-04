@@ -11,8 +11,6 @@
     "source=brigid-cargo-target,target=/cargo-target,type=volume"
   ],
   "containerEnv": {
-    "BRIG_ID_ORG": "brig-id",
-    "BRIG_ID_REPOS": ".github cli crypto core server-leaf server-grove server-forest spec app site",
     // Redirect all Rust target/ dirs to the dedicated volume (never on the host)
     "CARGO_TARGET_DIR": "/cargo-target",
     // Cargo defaults to one parallel rustc job per logical CPU. On a
@@ -34,6 +32,9 @@
   },
   // `remoteEnv` is only needed when a var must differ between the two.
   "features": {
+    "ghcr.io/helpers4/devcontainer/org-workspace:1": {
+      "autoDiscover": "public,private,internal,fork"
+    },
     // ── Infrastructure ───────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
     "ghcr.io/devcontainers/features/git-lfs:1": {},
@@ -51,7 +52,10 @@
       "license": "LGPL-3.0-or-later"
     },
     // ── AI ───────────────────────────────────────────────────────────────────
-    "ghcr.io/helpers4/devcontainer/claude-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/claude-dev:1": {
+      "remoteControl": true,
+      "remoteControlAutoTrust": true
+    },
     "ghcr.io/helpers4/devcontainer/mistral-dev:1": {},
     "ghcr.io/helpers4/devcontainer/cline-dev:1": {},
     "ghcr.io/helpers4/devcontainer/peon-ping:1": {

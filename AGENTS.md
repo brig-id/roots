@@ -102,7 +102,7 @@ the code — it rots the moment someone reads the file without the diff in front
 - Add future repositories as siblings of `roots/`, not nested inside it.
 - Update **all four** of these together when a new sibling repository is added — each keeps its
   own hardcoded repo list and none of them read from another:
-  - `.devcontainer/devcontainer.json` (`mounts`, `BRIG_ID_REPOS`)
+  - `.devcontainer/devcontainer.json` (`org-workspace` options)
   - `brig-id.code-workspace` (the `folders` list)
   - `.devcontainer/test-container.sh` (the `for repo in ...` loop)
   - `cli/repos.json`
