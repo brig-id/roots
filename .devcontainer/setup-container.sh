@@ -9,9 +9,7 @@ fi
 
 # /workspaces itself is created by Docker as the parent of the workspaceMount
 # target and comes out root:root — only `roots` (the bind-mounted
-# workspaceFolder) inherits node ownership from the mount. Every sibling repo
-# below is cloned fresh inside the container, so without this chown `node`
-# gets "Permission denied" creating /workspaces/<repo> for all of them.
+# workspaceFolder) inherits node ownership from the mount.
 sudo chown node:node /workspaces
 
 # ── Git commit signing (SSH format) ─────────────────────────────────────────────
@@ -49,36 +47,6 @@ if ! command -v diff-so-fancy >/dev/null 2>&1; then
   npm install -g diff-so-fancy >/dev/null 2>&1
   echo "✓ diff-so-fancy installed (fixes the git pager)."
 fi
-
-ORG="${BRIG_ID_ORG:-brig-id}"
-REPOS="${BRIG_ID_REPOS:-.github}"
-
-# ── Clone sibling repositories ──────────────────────────────────────────────────
-# This is the *only* way sibling repos are provisioned — there is no bind mount
-# fallback. That's deliberate: bind-mounting `../<repo>` from the host only works
-# for a local Docker Desktop/WSL2 checkout where all repos were pre-cloned side by
-# side; it silently breaks GitHub Codespaces, which only ever checks out the one
-# repo you launched the codespace from. Cloning here, in postCreateCommand, works
-# identically in both environments.
-echo "Setting up ${ORG} workspace..."
-
-for repo in $REPOS; do
-  target="/workspaces/${repo}"
-
-  if [ -d "${target}/.git" ] || [ -n "$(ls -A "${target}" 2>/dev/null || true)" ]; then
-    echo "✓ ${repo}: already available"
-    continue
-  fi
-
-  echo "→ ${repo}: cloning sibling repository"
-  if command -v gh >/dev/null 2>&1; then
-    gh repo clone "${ORG}/${repo}" "${target}" || echo "! ${repo}: clone failed"
-  else
-    git clone "https://github.com/${ORG}/${repo}.git" "${target}" || echo "! ${repo}: clone failed"
-  fi
-done
-
-echo "✓ Workspace repos ready."
 
 # ── Bitwarden Secrets Manager — fetch the "Credentials" project ────────────────
 # Third-party API credentials (Unsplash, Font Awesome, Web Awesome) live in BWS

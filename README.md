@@ -30,9 +30,9 @@ brig-id/
 
 ## Quick start — GitHub Codespaces (recommended)
 
-Open a Codespace on `brig-id/roots` directly from GitHub. `postCreateCommand`
-clones every sibling repo listed in `.devcontainer/devcontainer.json`'s
-`BRIG_ID_REPOS` into `/workspaces/<repo>` automatically — there's nothing to
+Open a Codespace on `brig-id/roots` directly from GitHub. the `org-workspace`
+feature clones the org's repos (see `.devcontainer/devcontainer.json`)
+into `/workspaces/<repo>` automatically — there's nothing to
 pre-clone. This is the only devcontainer path this repo supports without any
 manual setup.
 
@@ -76,7 +76,7 @@ bash .devcontainer/test-container.sh
 ```
 
 It checks the Rust toolchain, cargo tools, `gh` auth, and that every sibling
-repo in `BRIG_ID_REPOS` was cloned successfully.
+expected repo was cloned successfully.
 
-When a new repository is added to the organization, update `.devcontainer/devcontainer.json`
-(`BRIG_ID_REPOS`) and `brig-id.code-workspace` together.
+When a new repository is added to the organization, update the `org-workspace` options in
+`.devcontainer/devcontainer.json` and `brig-id.code-workspace` together.
