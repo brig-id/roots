@@ -53,9 +53,9 @@
       ]
     },
     "ghcr.io/helpers4/devcontainer/essential-dev:1": {
-      "version": "1.2.4",
-      "resolved": "ghcr.io/helpers4/devcontainer/essential-dev@sha256:0ac275fcdf516fe09da90d4470066abae46a0da6f3b3e349dee96b1bde59ba10",
-      "integrity": "sha256:0ac275fcdf516fe09da90d4470066abae46a0da6f3b3e349dee96b1bde59ba10",
+      "version": "1.2.5",
+      "resolved": "ghcr.io/helpers4/devcontainer/essential-dev@sha256:104274378a7314070b60542ef404298190961b3bbb064ccecac075ec8ed113aa",
+      "integrity": "sha256:104274378a7314070b60542ef404298190961b3bbb064ccecac075ec8ed113aa",
       "dependsOn": [
         "ghcr.io/helpers4/devcontainer/helpers4-common:1"
       ]
