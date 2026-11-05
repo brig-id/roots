@@ -1,0 +1,29 @@
+version: 2
+updates:
+  # Devcontainer features and base image: one grouped PR per week.
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "build(deps)"
+    groups:
+      devcontainer:
+        patterns:
+          - "*"
+
+  # GitHub Actions used by this repo's workflows: one grouped PR per week.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "build(deps)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
