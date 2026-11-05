@@ -40,11 +40,6 @@
     },
     // ── Infrastructure ───────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/shell-history:1": {},
-    "ghcr.io/devcontainers/features/git-lfs:1": {
-      // roots has no LFS files; the feature's auto pull still opens an SSH connection to GitHub,
-      // which hangs in a fresh container (unknown host key) and stalls the whole build
-      "autoPull": false
-    },
     "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
       "moby": false
