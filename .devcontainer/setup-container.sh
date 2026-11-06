@@ -27,6 +27,11 @@ if [ -n "${BWS_ACCESS_TOKEN:-}" ] && [ -n "${BITWARDEN_PROJECT_CREDENTIALS_ID:-}
   echo ""
   echo "Fetching secrets from Bitwarden (Credentials project)..."
   bws_env_file="$HOME/.bws-credentials.env"
+  # bws ignores BITWARDEN_IDENTITY_URL / BITWARDEN_API_URL and talks to the US cloud by default;
+  # point it at the same server as the token (https://vault.bitwarden.eu/identity -> .../vault.bitwarden.eu).
+  if [ -z "${BWS_SERVER_URL:-}" ] && [ -n "${BITWARDEN_IDENTITY_URL:-}" ]; then
+    export BWS_SERVER_URL="${BITWARDEN_IDENTITY_URL%/identity}"
+  fi
   bws_err="$(mktemp)"
   # A rejected token (revoked, expired, wrong server) must not stop the whole container from
   # building: warn and carry on without the Credentials secrets.
