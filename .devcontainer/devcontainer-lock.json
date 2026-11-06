@@ -32,9 +32,9 @@
       ]
     },
     "ghcr.io/helpers4/devcontainer/claude-dev:1": {
-      "version": "1.4.0",
-      "resolved": "ghcr.io/helpers4/devcontainer/claude-dev@sha256:4dbb192af74a1d15bfd333ed57c5a07c5c716a741d595943ff041121963abe44",
-      "integrity": "sha256:4dbb192af74a1d15bfd333ed57c5a07c5c716a741d595943ff041121963abe44",
+      "version": "1.4.1",
+      "resolved": "ghcr.io/helpers4/devcontainer/claude-dev@sha256:82628c443bceb586d6463faef94b8a2a0f605b54bc2beffe5123cf714006ad68",
+      "integrity": "sha256:82628c443bceb586d6463faef94b8a2a0f605b54bc2beffe5123cf714006ad68",
       "dependsOn": [
         "ghcr.io/helpers4/devcontainer/helpers4-common:1"
       ]
