@@ -11,6 +11,10 @@
     "source=brigid-cargo-target,target=/cargo-target,type=volume"
   ],
   "containerEnv": {
+    // bws only reads BWS_SERVER_URL (or its own config); the BITWARDEN_*_URL variables below are not
+    // read by it, so without this it talks to the US cloud (identity.bitwarden.com) and the EU
+    // machine token is rejected with invalid_client. Not a secret.
+    "BWS_SERVER_URL": "https://vault.bitwarden.eu",
     // Redirect all Rust target/ dirs to the dedicated volume (never on the host)
     "CARGO_TARGET_DIR": "/cargo-target",
     // Cargo defaults to one parallel rustc job per logical CPU. On a
