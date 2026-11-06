@@ -27,18 +27,14 @@
     // bump it back up if you know the host has RAM to spare.
     "CARGO_BUILD_JOBS": "4"
   },
-  // Secrets live in remoteEnv, not containerEnv: they are not baked into the container
-  // (docker run args / docker inspect) and a rotated token needs a reconnect, not a rebuild.
-  "remoteEnv": {
-    "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_BRIG_ID}",
-    "BWS_ACCESS_TOKEN": "${localEnv:BITWARDEN_BRIGID_MACHINE_TOKEN}",
-    "BITWARDEN_IDENTITY_URL": "${localEnv:BITWARDEN_BRIGID_IDENTITY_URL}",
-    "BITWARDEN_API_URL": "${localEnv:BITWARDEN_BRIGID_API_URL}",
-    "BITWARDEN_ORG_ID": "${localEnv:BITWARDEN_BRIGID_ORG_ID}",
-    "BITWARDEN_PROJECT_CREDENTIALS_ID": "${localEnv:BITWARDEN_BRIGID_PROJECT_CREDENTIALS_ID}",
-    "BITWARDEN_PROJECT_LEAF_ID": "${localEnv:BITWARDEN_BRIGID_PROJECT_LEAF_ID}"
-  },
   "features": {
+    // Secrets come from OpenBao (kv/shared/*, then kv/orgs/brig-id) into every process's env,
+    // VS Code included. Not in remoteEnv: `${localEnv:…}` is empty when VS Code attaches and
+    // would override them.
+    "ghcr.io/helpers4/devcontainer/openbao-env:1": {
+      "address": "https://bao.baxyz.dev:8200",
+      "paths": "shared/font-awesome,shared/web-awesome,orgs/brig-id"
+    },
     "ghcr.io/helpers4/devcontainer/org-workspace:1": {
       "autoDiscover": "public,private,internal,fork"
     },

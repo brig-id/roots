@@ -106,7 +106,7 @@ fi
 if [ -n "${GH_TOKEN:-}" ]; then
   ok "GH_TOKEN — present"
 else
-  fail "GH_TOKEN — missing (export GH_TOKEN_FOR_BRIG_ID on the host before reopening)"
+  fail "GH_TOKEN — missing (not loaded from OpenBao, see openbao-env status)"
 fi
 
 if [ -n "${WEBAWESOME_NPM_TOKEN:-}" ]; then
