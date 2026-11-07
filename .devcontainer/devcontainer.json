@@ -1,5 +1,8 @@
 {
   "name": "brig·id",
+  // Stable machine name: Remote Control names the environment "<hostname>:<folder>", and the
+  // default hostname is the container id, which changes on every rebuild.
+  "runArgs": ["--hostname=brig-id"],
   "image": "mcr.microsoft.com/devcontainers/typescript-node:26",
   "workspaceFolder": "/workspaces/roots",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/roots,type=bind,consistency=cached",
