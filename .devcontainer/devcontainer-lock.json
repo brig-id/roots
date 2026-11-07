@@ -90,6 +90,14 @@
         "ghcr.io/helpers4/devcontainer/helpers4-common:1"
       ]
     },
+    "ghcr.io/helpers4/devcontainer/openbao-env:1": {
+      "version": "1.0.1",
+      "resolved": "ghcr.io/helpers4/devcontainer/openbao-env@sha256:fb62c1f07ca85f033fb84c61b67e2d3ee8ffe3295a9773f902c26985cefc2f3c",
+      "integrity": "sha256:fb62c1f07ca85f033fb84c61b67e2d3ee8ffe3295a9773f902c26985cefc2f3c",
+      "dependsOn": [
+        "ghcr.io/helpers4/devcontainer/helpers4-common:1"
+      ]
+    },
     "ghcr.io/helpers4/devcontainer/org-workspace:1": {
       "version": "1.2.0",
       "resolved": "ghcr.io/helpers4/devcontainer/org-workspace@sha256:df72f38c925c4c01a61af4abc821e2de2d498c25dc311b3c7fd539d74a908af4",
