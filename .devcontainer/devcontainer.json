@@ -59,7 +59,9 @@
     // ── AI ───────────────────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/claude-dev:1": {
       "remoteControl": true,
-      "remoteControlAutoTrust": true
+      "remoteControlAutoTrust": true,
+      // Sessions started from claude.ai run unwatched: a permission prompt would stall them.
+      "remoteControlPermissionMode": "auto"
     },
     "ghcr.io/helpers4/devcontainer/mistral-dev:1": {},
     "ghcr.io/helpers4/devcontainer/cline-dev:1": {},
