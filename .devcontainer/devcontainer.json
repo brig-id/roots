@@ -61,7 +61,9 @@
       "remoteControl": true,
       "remoteControlAutoTrust": true,
       // Sessions started from claude.ai run unwatched: a permission prompt would stall them.
-      "remoteControlPermissionMode": "auto"
+      "remoteControlPermissionMode": "auto",
+      // Default model of those sessions (claude-dev ≥ 1.4.2).
+      "remoteControlModel": "sonnet"
     },
     "ghcr.io/helpers4/devcontainer/mistral-dev:1": {},
     "ghcr.io/helpers4/devcontainer/cline-dev:1": {},
