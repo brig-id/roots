@@ -18,38 +18,6 @@ if ! command -v diff-so-fancy >/dev/null 2>&1; then
   echo "✓ diff-so-fancy installed (fixes the git pager)."
 fi
 
-# ── Bitwarden Secrets Manager — fetch the "Credentials" project ────────────────
-# Third-party API credentials (Unsplash, Font Awesome, Web Awesome) live in BWS
-# instead of a committed or host-copied .env file. BWS_ACCESS_TOKEN itself must
-# still come from the host (remoteEnv) — bootstrapping secrets access from
-# secrets access is circular — but everything downstream of it is fetched here.
-if [ -n "${BWS_ACCESS_TOKEN:-}" ] && [ -n "${BITWARDEN_PROJECT_CREDENTIALS_ID:-}" ] && command -v bws >/dev/null 2>&1; then
-  echo ""
-  echo "Fetching secrets from Bitwarden (Credentials project)..."
-  bws_env_file="$HOME/.bws-credentials.env"
-  bws_err="$(mktemp)"
-  # A rejected token (revoked, expired, wrong server) must not stop the whole container from
-  # building: warn and carry on without the Credentials secrets.
-  if bws_json="$(bws secret list "${BITWARDEN_PROJECT_CREDENTIALS_ID}" --output json 2>"${bws_err}")" \
-    && printf '%s' "${bws_json}" | jq -r '.[] | "export \(.key)=\(.value | @sh)"' > "${bws_env_file}.tmp"; then
-    mv "${bws_env_file}.tmp" "${bws_env_file}"
-    chmod 600 "${bws_env_file}"
-    # shellcheck disable=SC1090
-    source "${bws_env_file}"
-    if ! grep -qF "${bws_env_file}" ~/.bashrc 2>/dev/null; then
-      echo "[ -f ${bws_env_file} ] && source ${bws_env_file}" >> ~/.bashrc
-    fi
-    echo "✓ Bitwarden secrets loaded into $(basename "${bws_env_file}") ($(wc -l < "${bws_env_file}") vars)."
-  else
-    rm -f "${bws_env_file}.tmp"
-    echo "! Bitwarden fetch failed — continuing without the Credentials secrets. Check BWS_ACCESS_TOKEN (revoked or expired?) and the server URLs:"
-    sed -n '1,3p' "${bws_err}" | sed 's/^/    /'
-  fi
-  rm -f "${bws_err}"
-else
-  echo "! Skipping Bitwarden secret fetch (BWS_ACCESS_TOKEN or BITWARDEN_PROJECT_CREDENTIALS_ID not set)."
-fi
-
 # ── Web Awesome Pro npm registry auth ───────────────────────────────────────────
 # `app/.npmrc` (committed) points `@web.awesome.me` at the private Cloudsmith
 # registry but deliberately omits the auth token — pnpm won't expand env vars

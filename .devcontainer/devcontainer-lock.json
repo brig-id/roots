@@ -23,14 +23,6 @@
         "ghcr.io/helpers4/devcontainer/helpers4-common:1"
       ]
     },
-    "ghcr.io/helpers4/devcontainer/bitwarden-secrets-manager:1": {
-      "version": "1.2.4",
-      "resolved": "ghcr.io/helpers4/devcontainer/bitwarden-secrets-manager@sha256:f9cdd33e0c7f6ef19ccdd248e9e19355a48568a7aaa3dd809d919e2a2b774a30",
-      "integrity": "sha256:f9cdd33e0c7f6ef19ccdd248e9e19355a48568a7aaa3dd809d919e2a2b774a30",
-      "dependsOn": [
-        "ghcr.io/helpers4/devcontainer/helpers4-common:1"
-      ]
-    },
     "ghcr.io/helpers4/devcontainer/claude-dev:1": {
       "version": "1.4.2",
       "resolved": "ghcr.io/helpers4/devcontainer/claude-dev@sha256:ac0d1c3a7e705a474477838f954e9ba111b7fca15b1f1a6448eacbf2b753ef8a",
