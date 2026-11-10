@@ -40,6 +40,8 @@
     // ── Infrastructure ───────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/shell-history:1": {},
     "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
+    // The clones carry Git LFS hooks (pre-push, post-checkout…): without git-lfs, every push fails.
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
       "moby": false
     },
