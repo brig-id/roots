@@ -142,7 +142,7 @@ echo "── System tools ──"
 check_cmd mold   "mold linker"
 check_cmd docker "docker (docker-outside-of-docker)"
 check_cmd node   "node"
-check_cmd mkcert "mkcert (local HTTPS for server-leaf / app dev)"
+check_cmd mkcert "mkcert (local HTTPS for server-seedling / app dev)"
 
 # ── Workspace repos ───────────────────────────────────────────────────────────
 echo ""
@@ -154,7 +154,7 @@ else
   fail "/workspaces — not writable by $(whoami) (sibling clones will fail with 'Permission denied'; re-run setup-container.sh)"
 fi
 
-for repo in roots .github cli crypto core server-leaf server-grove server-forest spec app site; do
+for repo in roots .github cli crypto core server-seedling server-grove server-forest spec app site demo; do
   if [ -d "/workspaces/$repo" ]; then
     ok "/workspaces/$repo"
   else

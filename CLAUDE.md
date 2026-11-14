@@ -21,12 +21,13 @@ could destroy the underlying Docker volumes.
 | `/workspaces/cli` | `cli` | `brigid` dev orchestrator CLI |
 | `/workspaces/crypto` | `crypto` | Cryptographic primitives |
 | `/workspaces/core` | `core` | Business logic crates |
-| `/workspaces/server-leaf` | `server-leaf` | Single-server deployment binary |
-| `/workspaces/server-grove` | `server-grove` | Multi-server orchestration (future) |
-| `/workspaces/server-forest` | `server-forest` | Global federation layer (future) |
-| `/workspaces/spec` | `spec` | Technical specs for audit |
-| `/workspaces/app` | `app` | Qwik UI |
-| `/workspaces/site` | `site` | Public marketing/landing site |
+| `/workspaces/server-seedling` | `server-seedling` | Smallest edition: one server (was `server-leaf`) |
+| `/workspaces/server-grove` | `server-grove` | Middle edition: same engine, in a container (step 2 of v1) |
+| `/workspaces/server-forest` | `server-forest` | Largest edition: several nodes (private; designed at step 3) |
+| `/workspaces/spec` | `spec` | The specification, written for auditors |
+| `/workspaces/app` | `app` | The web interface (Qwik) |
+| `/workspaces/site` | `site` | Public website |
+| `/workspaces/demo` | `demo` | Demonstration site that signs in with a server |
 
 ## Common commands (run from any product repo)
 
@@ -66,14 +67,14 @@ not in local files, per AGENTS.md's Rules section.
 
 **Git workflow**: never push to `origin` on any brig·id repo, `roots`/`.github` included, without
 the user's explicit go-ahead each time — there is no standing exception for pushing straight to
-`main`. Every repo (`cli`, `crypto`, `core`, `server-leaf`, `spec`, `app`, `site`, and `roots`/
+`main`. Every repo (`cli`, `crypto`, `core`, `server-seedling`, `spec`, `app`, `site`, `demo`, and `roots`/
 `.github` too) keeps `main`/`dev/*` protected: branch from `dev/*` (`feat/*`/`bug/*`) or from
 `main` for an urgent prod fix (`hotfix/*`). Every merge is rebase + fast-forward only — rebase
 onto the target's tip before merging, no merge commits, no squash. See AGENTS.md's Git Workflow
 section.
 
 A narrow, temporary carve-out may be granted in conversation for a specific piece of work (e.g.
-"push fix commits straight to `main` while we get the server-leaf deploy unblocked") — treat that
+"push fix commits straight to `main` while we get the server-seedling deploy unblocked") — treat that
 as scoped to exactly what was said (that repo, that kind of commit, that task), never as a
 precedent to reuse elsewhere or later without asking again.
 
