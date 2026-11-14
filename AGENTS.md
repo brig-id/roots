@@ -46,12 +46,13 @@ and on GitHub Codespaces, which only ever checks out the one repo you launch the
 | `/workspaces/cli` | `brig-id/cli` | `brigid` dev orchestrator CLI |
 | `/workspaces/crypto` | `brig-id/crypto` | Cryptographic primitives |
 | `/workspaces/core` | `brig-id/core` | Business logic crates |
-| `/workspaces/server-leaf` | `brig-id/server-leaf` | Single-server deployment binary |
-| `/workspaces/server-grove` | `brig-id/server-grove` | Multi-server orchestration (future) |
-| `/workspaces/server-forest` | `brig-id/server-forest` | Global federation layer (future) |
-| `/workspaces/spec` | `brig-id/spec` | Technical specs for audit |
-| `/workspaces/app` | `brig-id/app` | Qwik UI |
-| `/workspaces/site` | `brig-id/site` | Public marketing/landing site |
+| `/workspaces/server-seedling` | `brig-id/server-seedling` | The smallest edition: one server, for oneself or a family (was `server-leaf`) |
+| `/workspaces/server-grove` | `brig-id/server-grove` | The middle edition: the same engine in a container, for a community (step 2 of v1) |
+| `/workspaces/server-forest` | `brig-id/server-forest` | The largest edition: several nodes, for a company (private; designed at step 3) |
+| `/workspaces/spec` | `brig-id/spec` | The specification, written for auditors |
+| `/workspaces/app` | `brig-id/app` | The web interface (Qwik) |
+| `/workspaces/site` | `brig-id/site` | Public website |
+| `/workspaces/demo` | `brig-id/demo` | Demonstration site that signs in with a server; end-to-end test of that flow |
 
 ## Devcontainer — available tools
 
@@ -65,7 +66,7 @@ The container is self-contained; no host Rust installation is needed.
 - `cargo-nextest`, `cargo-llvm-cov`, `cargo-fuzz`
 - `cargo-edit`, `cargo-watch`, `cargo-cyclonedx`
 - `just`, `wasm-pack`, `mprocs` (split-pane process runner)
-- `mkcert` (local HTTPS, used when running `server-leaf`/`app` outside Docker)
+- `mkcert` (local HTTPS, used when running `server-seedling`/`app` outside Docker)
 - `gh` CLI, `docker` CLI
 
 Cargo volumes are Docker named volumes (`brigid-cargo-*`) — nothing written to the host.
@@ -201,7 +202,8 @@ This repo's *shape* (`CLAUDE.md`, `scopes.json`, `commit-convention.json`,
 [helpers4/.dev](https://github.com/helpers4/.dev)'s canonical setup. Deltas from that shape:
 - **Stack: Rust/cargo**, not TypeScript — `core`/`crypto`/`server-*` are cargo crates; only `app`
   is a pnpm/Qwik project.
-- **License: LGPL-3.0-or-later**, same as helpers4.
+- **Licences:** `core`, `app` and the servers are AGPL-3.0-or-later; `crypto` stays
+  LGPL-3.0-or-later; `demo` is MIT (example code); this repo keeps LGPL-3.0-or-later.
 - `test-container.sh` (environment self-check) and the cargo-volume-heavy, nightly/wasm/mold
   install logic in `setup-container.sh` are brig·id-specific and intentionally not shared with
   the TypeScript-only orgs.

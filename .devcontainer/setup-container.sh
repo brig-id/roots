@@ -122,7 +122,7 @@ if ! command -v mold >/dev/null 2>&1; then
   echo "✓ mold ready."
 fi
 
-# ── mkcert (local HTTPS for `server-leaf` / `app` dev) ───────────────────────────
+# ── mkcert (local HTTPS for `server-seedling` / `app` dev) ───────────────────────────
 if ! command -v mkcert >/dev/null 2>&1; then
   echo ""
   echo "Installing mkcert..."

@@ -20,12 +20,13 @@ brig-id/
 ├── cli/            # brigid dev orchestrator CLI
 ├── crypto/         # cryptographic primitives
 ├── core/           # business logic crates
-├── server-leaf/    # single-server deployment binary
-├── server-grove/   # multi-server orchestration (future)
-├── server-forest/  # global federation layer (future)
-├── spec/           # technical specs for audit
-├── app/            # Qwik UI
-└── site/           # public marketing/landing site
+├── server-seedling/ # smallest edition: one server, for oneself or a family
+├── server-grove/    # middle edition: the same engine in a container, for a community
+├── server-forest/   # largest edition: several nodes, for a company (private)
+├── spec/            # the specification, written for auditors
+├── app/             # the web interface (Qwik)
+├── site/            # public website
+└── demo/            # demonstration site that signs in with a server
 ```
 
 ## Quick start — GitHub Codespaces (recommended)
