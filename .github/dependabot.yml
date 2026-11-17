@@ -1,29 +1,22 @@
 version: 2
-updates:
-  # Devcontainer features and base image: one grouped PR per week.
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-    commit-message:
-      prefix: "build(deps)"
-    groups:
-      devcontainer:
-        patterns:
-          - "*"
 
-  # GitHub Actions used by this repo's workflows: one grouped PR per week.
-  - package-ecosystem: "github-actions"
-    directory: "/"
+# One pull request a week for everything this repository depends on, all
+# ecosystems together: Dependabot opens no other.
+multi-ecosystem-groups:
+  dependencies:
     schedule:
-      interval: "weekly"
+      interval: weekly
+      day: monday
     labels:
-      - "dependencies"
-    commit-message:
-      prefix: "build(deps)"
-    groups:
-      github-actions:
-        patterns:
-          - "*"
+      - dependencies
+
+updates:
+  - package-ecosystem: devcontainers
+    directory: /
+    multi-ecosystem-group: dependencies
+    patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    multi-ecosystem-group: dependencies
+    patterns: ["*"]
