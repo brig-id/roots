@@ -31,7 +31,7 @@
     // VS Code included. Not in remoteEnv: `${localEnv:…}` is empty when VS Code attaches and
     // would override them.
     "ghcr.io/helpers4/devcontainer/openbao-env:1": {
-      "address": "https://bao.baxyz.dev:8200",
+      "address": "https://bao.baxyz.dev",
       "paths": "shared/font-awesome,shared/web-awesome,orgs/brig-id"
     },
     "ghcr.io/helpers4/devcontainer/org-workspace:1": {
