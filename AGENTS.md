@@ -48,7 +48,7 @@ and on GitHub Codespaces, which only ever checks out the one repo you launch the
 | `/workspaces/core` | `brig-id/core` | Business logic crates |
 | `/workspaces/server-seedling` | `brig-id/server-seedling` | The smallest edition: one server, for oneself or a family (was `server-leaf`) |
 | `/workspaces/server-grove` | `brig-id/server-grove` | The middle edition: the same engine in a container, for a community (step 2 of v1) |
-| `/workspaces/server-forest` | `brig-id/server-forest` | The largest edition: several nodes, for a company (private; designed at step 3) |
+| `/workspaces/server-forest` | `brig-id/server-forest` | The largest edition: several nodes, for a company (designed at step 3; AGPL like the others, ADR-020) |
 | `/workspaces/spec` | `brig-id/spec` | The specification, written for auditors |
 | `/workspaces/app` | `brig-id/app` | The web interface (Qwik) |
 | `/workspaces/site` | `brig-id/site` | Public website |
@@ -187,14 +187,19 @@ Every merge is **rebase + fast-forward only** — no merge commits, no squash me
 - Releases are tracked with **tags on `main`** (there's no merge commit to mark them, since every
   merge is a fast-forward).
 
-**Release checklist** — the tag, `CHANGELOG.md`, and `Cargo.toml`'s `version` must always tell the
-same story. Skipping the version bump has happened more than once (a tagged release shipped with
-the *previous* version still in `Cargo.toml`) — always do these in order, in the same PR that
-lands on `main`:
+**Releases are made by release-please, not by hand.** In crypto, core, app, server-seedling and
+server-grove, `.github/workflows/release.yml` (the shared workflow of `brig-id/.github`) keeps one
+release pull request open: the next version (from the commit types), the `CHANGELOG.md` entry
+(from the commit subjects) and the version in `Cargo.toml`/`package.json`. Merging it is the
+release: the tag `vX.Y.Z` and the GitHub Release follow, and a server's tag builds its binaries
+and image. Never bump a version, write a changelog entry or push a release tag by hand in those
+repositories.
 
-1. Bump `version` in `Cargo.toml` (workspace-level for a cargo workspace).
-2. Add the release's entry to `CHANGELOG.md`.
-3. Merge to `main`, then tag `vX.Y.Z` on the resulting commit.
+A release of crypto, core or the interface reaches the repositories that pin it through Renovate
+(the organisation's preset, `brig-id/.github`'s `default.json`): one pull request, `feat(deps)`
+for a new minor, `fix(deps)` otherwise, which in turn opens their own release pull request. A
+release of everything is that chain, merged from upstream to downstream; `brigid release` (cli)
+lists it, in order, with the checks of each pull request.
 
 Never pin another repo's git dependency to a bare commit `rev` that isn't reachable from a tag —
 this workflow's rebase+fast-forward merges rewrite SHAs, so an unreached commit can become
