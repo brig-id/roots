@@ -26,7 +26,8 @@ brig-id/
 ├── spec/            # the specification, written for auditors
 ├── app/             # the web interface (Qwik)
 ├── site/            # public website
-└── demo/            # demonstration site that signs in with a server
+├── demo/            # demonstration site that signs in with a server
+└── lab/             # experiment pages measured on real devices (lab.brig.id)
 ```
 
 ## Quick start — GitHub Codespaces (recommended)
