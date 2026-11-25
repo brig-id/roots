@@ -53,6 +53,7 @@ and on GitHub Codespaces, which only ever checks out the one repo you launch the
 | `/workspaces/app` | `brig-id/app` | The web interface (Qwik) |
 | `/workspaces/site` | `brig-id/site` | Public website |
 | `/workspaces/demo` | `brig-id/demo` | Demonstration site that signs in with a server; end-to-end test of that flow |
+| `/workspaces/lab` | `brig-id/lab` | Experiment pages measured on real devices (lab.brig.id), not indexed |
 
 ## Devcontainer — available tools
 
@@ -229,7 +230,7 @@ This repo's *shape* (`CLAUDE.md`, `scopes.json`, `commit-convention.json`,
 - **Stack: Rust/cargo**, not TypeScript — `core`/`crypto`/`server-*` are cargo crates; only `app`
   is a pnpm/Qwik project.
 - **Licences:** `core`, `app` and the servers are AGPL-3.0-or-later; `crypto` stays
-  LGPL-3.0-or-later; `demo` is MIT (example code); this repo keeps LGPL-3.0-or-later.
+  LGPL-3.0-or-later; `demo` is MIT (example code); `lab` is AGPL-3.0-or-later; this repo keeps LGPL-3.0-or-later.
 - `test-container.sh` (environment self-check) and the cargo-volume-heavy, nightly/wasm/mold
   install logic in `setup-container.sh` are brig·id-specific and intentionally not shared with
   the TypeScript-only orgs.

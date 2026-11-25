@@ -47,6 +47,10 @@
 		{
 			"name": "🔦 demo",
 			"path": "../demo"
+		},
+		{
+			"name": "🧪 lab",
+			"path": "../lab"
 		}
 	],
 	"settings": {

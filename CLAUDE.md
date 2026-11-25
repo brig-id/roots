@@ -28,6 +28,7 @@ could destroy the underlying Docker volumes.
 | `/workspaces/app` | `app` | The web interface (Qwik) |
 | `/workspaces/site` | `site` | Public website |
 | `/workspaces/demo` | `demo` | Demonstration site that signs in with a server |
+| `/workspaces/lab` | `lab` | Experiment pages measured on real devices (lab.brig.id) |
 
 ## Common commands (run from any product repo)
 
@@ -67,7 +68,7 @@ not in local files, per AGENTS.md's Rules section.
 
 **Git workflow**: never push to `origin` on any brig·id repo, `roots`/`.github` included, without
 the user's explicit go-ahead each time — there is no standing exception for pushing straight to
-`main`. Every repo (`cli`, `crypto`, `core`, `server-seedling`, `spec`, `app`, `site`, `demo`, and `roots`/
+`main`. Every repo (`cli`, `crypto`, `core`, `server-seedling`, `spec`, `app`, `site`, `demo`, `lab`, and `roots`/
 `.github` too) keeps `main`/`dev/*` protected: branch from `dev/*` (`feat/*`/`bug/*`) or from
 `main` for an urgent prod fix (`hotfix/*`). Every merge is rebase + fast-forward only — rebase
 onto the target's tip before merging, no merge commits, no squash. See AGENTS.md's Git Workflow
