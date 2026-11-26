@@ -191,16 +191,20 @@ Every merge is **rebase + fast-forward only** — no merge commits, no squash me
 **Releases are made by release-please, not by hand.** In crypto, core, app, server-seedling and
 server-grove, `.github/workflows/release.yml` (the shared workflow of `brig-id/.github`) keeps one
 release pull request open: the next version (from the commit types), the `CHANGELOG.md` entry
-(from the commit subjects) and the version in `Cargo.toml`/`package.json`. Merging it is the
-release: the tag `vX.Y.Z` and the GitHub Release follow, and a server's tag builds its binaries
-and image. Never bump a version, write a changelog entry or push a release tag by hand in those
-repositories.
+(from the commit subjects) and the version in `Cargo.toml`/`package.json`. Before 1.0, `feat` and
+`fix` make a patch and a `!` or `BREAKING CHANGE:` a minor; `build`, `ci`, `chore`, `docs`, `test`
+and `refactor` alone make no release. Merging the release pull request is the release, and only
+the owner merges it: the tag `vX.Y.Z` and the GitHub Release follow, and a server's tag builds
+its binaries and image. Never bump a version, write a changelog entry or push a release tag by
+hand in those repositories.
 
 A release of crypto, core or the interface reaches the repositories that pin it through Renovate
-(the organisation's preset, `brig-id/.github`'s `default.json`): one pull request, `feat(deps)`
-for a new minor, `fix(deps)` otherwise, which in turn opens their own release pull request. A
-release of everything is that chain, merged from upstream to downstream; `brigid release` (cli)
-lists it, in order, with the checks of each pull request.
+(the organisation's preset, `brig-id/.github`'s `default.json`): one pull request per repository,
+on a Monday (sooner from the box on its Dependency Dashboard), always `fix(deps)`, which in turn
+opens their own release pull request. An update from outside the project comes as `build(deps)`,
+one pull request a week per repository, and makes no release of its own. A release of everything
+is that chain, merged from upstream to downstream; `brigid release` (cli) lists it, in order,
+with the checks of each pull request.
 
 Never pin another repo's git dependency to a bare commit `rev` that isn't reachable from a tag —
 this workflow's rebase+fast-forward merges rewrite SHAs, so an unreached commit can become
