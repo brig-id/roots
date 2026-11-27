@@ -48,7 +48,7 @@ and on GitHub Codespaces, which only ever checks out the one repo you launch the
 | `/workspaces/core` | `brig-id/core` | Business logic crates |
 | `/workspaces/server-seedling` | `brig-id/server-seedling` | The smallest edition: one server, for oneself or a family (was `server-leaf`) |
 | `/workspaces/server-grove` | `brig-id/server-grove` | The middle edition: the same engine in a container, for a community (step 2 of v1) |
-| `/workspaces/server-forest` | `brig-id/server-forest` | The largest edition: several nodes, for a company (designed at step 3; AGPL like the others, ADR-020) |
+| `/workspaces/server-forest` | `brig-id/server-forest` | The largest edition: the same engine as several nodes on one PostgreSQL database, for a company (AGPL like the others, ADR-020) |
 | `/workspaces/spec` | `brig-id/spec` | The specification, written for auditors |
 | `/workspaces/app` | `brig-id/app` | The web interface (Qwik) |
 | `/workspaces/site` | `brig-id/site` | Public website |
@@ -199,7 +199,7 @@ other repositories, taking a repository at the branch of the same name when it h
 request there, and runs the suites of a whole server (the servers' tests, the interface's and the
 demo's in a browser): the whole change is tested together before any of it is merged.
 
-A server (seedling, grove) follows crypto, the core and the interface **at a commit of their
+A server (seedling, grove, forest) follows crypto, the core and the interface **at a commit of their
 `main`, not at a release**: `branch = "main"` in `Cargo.toml` with the commit in `Cargo.lock`, and
 `APP_REF: <commit>` in the server's `ci.yml`. The pull request that needs a newer commit moves it
 (`cargo update -p brigid-server`, or the new `APP_REF`). Only ever follow a commit that is on the

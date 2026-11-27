@@ -23,7 +23,7 @@ could destroy the underlying Docker volumes.
 | `/workspaces/core` | `core` | Business logic crates |
 | `/workspaces/server-seedling` | `server-seedling` | Smallest edition: one server (was `server-leaf`) |
 | `/workspaces/server-grove` | `server-grove` | Middle edition: same engine, in a container (step 2 of v1) |
-| `/workspaces/server-forest` | `server-forest` | Largest edition: several nodes (designed at step 3; public and AGPL like the others, ADR-020) |
+| `/workspaces/server-forest` | `server-forest` | Largest edition: the same engine as several nodes on one PostgreSQL database (public and AGPL like the others, ADR-020) |
 | `/workspaces/spec` | `spec` | The specification, written for auditors |
 | `/workspaces/app` | `app` | The web interface (Qwik) |
 | `/workspaces/site` | `site` | Public website |
