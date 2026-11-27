@@ -22,7 +22,7 @@ brig-id/
 ├── core/           # business logic crates
 ├── server-seedling/ # smallest edition: one server, for oneself or a family
 ├── server-grove/    # middle edition: the same engine in a container, for a community
-├── server-forest/   # largest edition: several nodes, for a company (private)
+├── server-forest/   # largest edition: several nodes on PostgreSQL, for a company
 ├── spec/            # the specification, written for auditors
 ├── app/             # the web interface (Qwik)
 ├── site/            # public website
