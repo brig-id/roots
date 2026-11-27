@@ -92,6 +92,7 @@ check_cmd wasm-pack      "wasm-pack"
 check_cmd just           "just (task runner)"
 check_cmd cargo-fuzz     "cargo-fuzz (nightly)"
 check_cmd mprocs         "mprocs (split-pane process runner)"
+check_cmd brigid         "brigid (brig-id/cli: dev, repos, release)"
 
 # ── Critical environment variables ────────────────────────────────────────────
 echo ""
