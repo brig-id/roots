@@ -135,5 +135,15 @@ if ! command -v mkcert >/dev/null 2>&1; then
   echo "✓ mkcert ready."
 fi
 
+# ── brigid (the workspace's own CLI: dev, repos, release) ─────────────────────
+# From brig-id/cli's main, at every container build: it has no release of its
+# own, and `brigid release` must say what the release workflow will do (that
+# workflow installs it from main too). /usr/local/cargo/bin is in the image,
+# not a volume: a rebuild loses it.
+echo ""
+echo "Installing brigid (brig-id/cli, main)..."
+cargo install --locked --quiet --git https://github.com/brig-id/cli --branch main brigid
+echo "✓ brigid ready."
+
 echo ""
 echo "✓ brig·id workspace ready."
