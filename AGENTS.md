@@ -188,28 +188,50 @@ Every merge is **rebase + fast-forward only** — no merge commits, no squash me
 - Releases are tracked with **tags on `main`** (there's no merge commit to mark them, since every
   merge is a fast-forward).
 
-**Releases are made by release-please, not by hand.** In crypto, core, app, server-seedling and
-server-grove, `.github/workflows/release.yml` (the shared workflow of `brig-id/.github`) keeps one
-release pull request open: the next version (from the commit types), the `CHANGELOG.md` entry
-(from the commit subjects) and the version in `Cargo.toml`/`package.json`. Before 1.0, `feat` and
-`fix` make a patch and a `!` or `BREAKING CHANGE:` a minor; `build`, `ci`, `chore`, `docs`, `test`
-and `refactor` alone make no release. Merging the release pull request is the release, and only
-the owner merges it: the tag `vX.Y.Z` and the GitHub Release follow, and a server's tag builds
-its binaries and image. Never bump a version, write a changelog entry or push a release tag by
-hand in those repositories.
+### One change, one pull request per repository
 
-A release of crypto, core or the interface reaches the repositories that pin it through Renovate
-(the organisation's preset, `brig-id/.github`'s `default.json`): one pull request per repository,
-on a Monday (sooner from the box on its Dependency Dashboard), always `fix(deps)`, which in turn
-opens their own release pull request. An update from outside the project comes as `build(deps)`,
-one pull request a week per repository, and makes no release of its own. A release of everything
-is that chain, merged from upstream to downstream; `brigid release` (cli) lists it, in order,
-with the checks of each pull request.
+A change is **one pull request per repository it touches**, and nothing else: no release pull
+request, no pull request to move a pin, no follow-up pull request per repository for a detail.
+When a change spans repositories, its pull requests are a **stack**: **branches of the same name**
+in each repository, opened from crypto down to the servers and merged in that order. Each
+repository's CI (`integration.yml` of `brig-id/.github`) builds a server from its change and the
+other repositories, taking a repository at the branch of the same name when it has an open pull
+request there, and runs the suites of a whole server (the servers' tests, the interface's and the
+demo's in a browser): the whole change is tested together before any of it is merged.
 
-Never pin another repo's git dependency to a bare commit `rev` that isn't reachable from a tag —
-this workflow's rebase+fast-forward merges rewrite SHAs, so an unreached commit can become
-permanently unfetchable once the source repo garbage-collects it. Pin `tag = "vX.Y.Z"` instead
-(or, if no tag exists yet for the content you need, treat that as a signal to cut one).
+A server (seedling, grove) follows crypto, the core and the interface **at a commit of their
+`main`, not at a release**: `branch = "main"` in `Cargo.toml` with the commit in `Cargo.lock`, and
+`APP_REF: <commit>` in the server's `ci.yml`. The pull request that needs a newer commit moves it
+(`cargo update -p brigid-server`, or the new `APP_REF`). Only ever follow a commit that is on the
+other repository's `main`: merges rebase, so the commits of a pull request's branch disappear when
+it is merged. That is why a server's pull request in a stack gets its last commit (the lock file,
+`APP_REF`) after the others are merged, and stays red until then.
+
+The reusable workflows of `brig-id/.github` are called at `@main` (third-party actions stay pinned
+to a commit).
+
+### Releases
+
+**Only the servers are released, and only when the owner asks.** Nothing releases on a merge;
+crypto, the core and the interface have no release of their own (no version to bump, no tag, no
+`CHANGELOG.md` anywhere). A release is the server's `Release` workflow, started by hand (Actions →
+Release → Run workflow, or `brigid release cut <server>`): it refuses a commit of `main` that is
+not green, computes the version and the notes from what was merged since the last release in the
+server, crypto, the core and the interface, builds and tests again, pushes the image, then creates
+the GitHub Release **and the tag, last**. A failed release leaves no tag: it is run again.
+
+- **The agent never starts a release**, never pushes a tag, never bumps a version: the version is
+  the tag, and `Cargo.toml` / `package.json` say `0.0.0`.
+- `brigid release` says, for each server, what a release would hold, whether one is due, and what
+  is merged in crypto, the core or the interface that the server does not follow yet.
+- The commit type says whether a person running a server would notice: `feat`, `fix`, `perf` and
+  `revert` are listed in the notes and are a reason for a release; `build`, `ci`, `chore`, `docs`,
+  `test` and `refactor` are not, and with only those the workflow makes no release unless forced.
+  Before 1.0 a release is a patch, and a `!` or a `BREAKING CHANGE:` footer a minor. The commit
+  subject is the line people read in the notes.
+- Renovate (the organisation's preset, `brig-id/.github`'s `default.json`) proposes what comes from
+  outside the project, one pull request a week per repository, as `build(deps)`; it proposes
+  nothing for the project's own repositories.
 
 ## Common commands
 
