@@ -46,13 +46,20 @@ cargo +nightly fuzz run fuzz_decrypt -- -max_total_time=60
 
 ## Common gotchas
 
-**Commit scopes**: always read `scopes.json` at the active repo root before choosing a scope.
+**Commit scopes**: each repository has its own list, in `scopes.json` at its root or, where
+there is none, in its `.vscode/settings.json` (`conventionalCommits.scopes`, the list the commit
+check reads) and the "Allowed scopes" table of its `AGENTS.md`. Read it before choosing a scope.
 Never invent a scope that isn't listed. Full type→emoji mapping: `/workspaces/roots/commit-convention.json`.
 Use `/commit` (Claude Code slash command) to auto-generate a message from staged changes.
 
 **Cargo target/volumes**: `CARGO_TARGET_DIR=/cargo-target` and the cargo registry/git caches are
 Docker named volumes (`brigid-cargo-*`), never on the host — don't assume a `target/` dir exists
-inside a repo checkout.
+inside a repo checkout. Every repository and every worktree builds into that one volume, and a
+worktree at a new path compiles the project's crates again under a new name: it only grows.
+`.devcontainer/clean-cargo-target.sh` removes what no build has read for a week (and everything
+above 40 GB); it runs at each start of the container. Run it after removing worktrees, and
+remove a build directory of your own (`CARGO_TARGET_DIR=/cargo-target/<name>`) when you are done
+with it.
 
 **Toolchain**: stable Rust is the devcontainer base; nightly is installed separately (rust-src +
 llvm-tools-preview) only for `cargo-fuzz`. See `.devcontainer/setup-container.sh` for the full
@@ -68,8 +75,9 @@ not in local files, per AGENTS.md's Rules section.
 
 **Git workflow**: never push to `origin` on any brig·id repo, `roots`/`.github` included, without
 the user's explicit go-ahead each time — there is no standing exception for pushing straight to
-`main`. Every repo (`cli`, `crypto`, `core`, `server-seedling`, `spec`, `app`, `site`, `demo`, `lab`, and `roots`/
-`.github` too) keeps `main`/`dev/*` protected: branch from `dev/*` (`feat/*`/`bug/*`) or from
+`main`. In every repo (the servers, `cli`, `crypto`, `core`, `spec`, `app`, `site`, `demo`, `lab`, and
+`roots`/`.github` too) `main`/`dev/*` are treated as protected, whether or not GitHub enforces it
+there (today it does on the three servers only): branch from `dev/*` (`feat/*`/`bug/*`) or from
 `main` for an urgent prod fix (`hotfix/*`). Every merge is rebase + fast-forward only — rebase
 onto the target's tip before merging, no merge commits, no squash. See AGENTS.md's Git Workflow
 section.
