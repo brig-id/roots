@@ -132,6 +132,10 @@ fi
 
 if [ -d "${CARGO_TARGET_DIR:-/cargo-target}" ]; then
   ok "${CARGO_TARGET_DIR:-/cargo-target} — target volume accessible"
+  target_gb="$(du -sk "${CARGO_TARGET_DIR:-/cargo-target}" 2>/dev/null | awk '{ printf "%d", $1 / 1048576 }')"
+  if [ "${target_gb:-0}" -gt 40 ]; then
+    warn "${CARGO_TARGET_DIR:-/cargo-target} holds ${target_gb} GB — run .devcontainer/clean-cargo-target.sh"
+  fi
 else
   warn "${CARGO_TARGET_DIR:-/cargo-target} — missing (will be created on first build)"
 fi
