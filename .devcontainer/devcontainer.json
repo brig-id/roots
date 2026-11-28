@@ -99,5 +99,8 @@
     5432 // PostgreSQL (Grove, future)
   ],
   "remoteUser": "node",
-  "postCreateCommand": "bash .devcontainer/setup-container.sh"
+  "postCreateCommand": "bash .devcontainer/setup-container.sh",
+  // The shared Cargo target volume only ever grows: at each start, what no
+  // build has read for a week goes (in the background, it takes a minute).
+  "postStartCommand": "nohup bash .devcontainer/clean-cargo-target.sh > /tmp/clean-cargo-target.log 2>&1 &"
 }
